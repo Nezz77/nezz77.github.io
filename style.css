@@ -1,0 +1,258 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #121111;
+    color: #333;
+    background: url('background.jpg') no-repeat center center fixed,
+                url('background2.jpg') no-repeat center center fixed; 
+
+     background-size: cover, cover;
+}
+
+header {
+    background: #0073e6;
+    color: white;
+    text-align: center;
+    padding: 25px 10px;
+    font-size: 1.2em;
+    font-weight: bold;
+    letter-spacing: 1px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+header a {
+    color: rgb(211, 233, 137);
+    text-decoration: none;
+    font-weight: bold;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    transition: background 0.3s ease;
+}
+
+header a:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+header img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+header img:hover {
+    transform: scale(1.1);  
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.3); 
+}
+
+
+section {
+    background: rgb(56, 170, 246);
+    padding: 25px;
+    margin: 20px auto;
+    width: 80%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+section:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+h1, h2, h4 {
+    color: #0073e6;
+    text-align: center;
+}
+
+ul {
+    list-style-type: square;
+}
+
+.card-body{
+
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #0073e6;
+    color: white;
+    margin-top: 20px;
+}
+
+footer a {
+    color: #b0f235; 
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #0073e6; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+footer a:hover {
+    background-color: #005bb5;
+    color: #f0f336; 
+}
+
+
+@media (max-width: 768px) {
+    section {
+        width: 90%;
+        padding: 15px;
+    }
+
+    header {
+        font-size: 1em;
+        padding: 15px;
+    }
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+ul li::before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: radial-gradient(circle, #0073e6, #004a99);
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/*new lines for welcome ani*/
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-intro {
+    animation: fadeSlideUp 1s ease-out forwards;
+}
+
+
+.smooth-marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    width: 300px;
+}
+
+.smooth-marquee h1 {
+    display: inline-block;
+    animation: marquee 10s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(20%);
+    }
+    100% {
+        transform: translateX(-92%);
+    }
+
+
+}
+
+
+
+/* back to top */
+#backToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #6492d2;
+    color: rgb(240, 2, 2);
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+    box-shadow: 2px 2px 5px rgba(234, 45, 45, 0.3);
+}
+
+.backToTop:hover {
+    background: #005bb5;
+}
+
+
+
+
+/* photography page csss */
+
+.card {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.card-img-top,
+.card-body {
+    transition: transform 0.5s ease, filter 0.5s ease;
+    padding: 15px;
+}
+
+/* Zoom the image and text together */
+.card:hover .card-img-top,
+.card:hover .card-body {
+    transform: scale(1.1);
+}
+
+/* Blur everything except the hovered card */
+.card:hover {
+    z-index: 20;
+}
+
+.card:not(:hover) {
+    filter: blur(3px);
+    opacity: 0.7;
+}
+
+
+/* timeline */
+.timeline {
+    position: relative;
+    padding-left: 19px;
+    border-left: 3px solid #007bff;
+    margin-top: 20px;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 20px;
+}
+.timeline-item .timeline-icon {
+    position: absolute;
+    left: -27px;
+    top: 5px;
+    width: 20px;
+    height: 20px;
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.timeline-item .timeline-content,.col-md-12 p {
+    background: #86c0fa;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
