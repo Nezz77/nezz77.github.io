@@ -14,17 +14,6 @@ This project is a simple web application to showcase my CV. It is designed to hi
 - Frameworks-Bootstrap
 - Git (for version control)
 
-## Installation Instructions
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/yourproject.git
-   ```
-2. Navigate into the project folder:
-   ```bash
-   cd yourproject
-   ```
-3. Open `index.html` in your browser.
-
 ## Live Demo
 You can view the live demo of the project at: [Live Demo](http://nezz77.github.io))
 
