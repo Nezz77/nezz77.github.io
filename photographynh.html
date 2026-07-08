@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="nhlogo.ico">
-    <title>NH Photography</title>
+    <title>NH Photography | Portfolio</title>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7XY9Y6H8HY"></script>
     <script>
@@ -15,496 +15,669 @@
 
         gtag('config', 'G-7XY9Y6H8HY');
     </script>
-
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
+<body class="photography-page">
+    <!-- Background Elements -->
+    <div class="bg-image-overlay"></div>
+    <div class="glow-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
 
-<body background="background2.jpg">
-    <header class="container mt-4">
-        <div class="row align-items-center">
-            <div class="col-md-3 text-center">
-                <img src="my4to.jpg" class="img-fluid img-thumbnail rounded-circle" alt="Profile Photo" width="150">
-            </div>
-            <div class="col-md-9">
-                <h1 style="font-family: Georgia, 'Times New Roman', Times, serif;">NH Photography</h1>
-                <h2>Affordable Promotions – DM for Details!</h2>
-                <p>
-                    <a href="mailto:nesanduhm@icloud.com"><i class="bi bi-envelope"></i> Email</a> |
-                    <a href="tel:+94777940340"><i class="bi bi-telephone"></i> Phone</a>
-                </p>
-                <p>
-                    <a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank"><i class="bi bi-instagram"></i> Instagram</a> |
-                    <a href="https://wa.me/+940722379560" target="_blank"><i class="bi bi-whatsapp"></i> Whatsapp</a>
-                </p>
+    <!-- Floating Glass Navbar -->
+    <div class="navbar-container">
+        <nav class="glass-nav">
+            <a href="index.html" class="nav-brand">
+                <img src="nhlogo.png" alt="NH Logo" width="32" height="32">
+                <span>NESANDU.HM</span>
+            </a>
+            <ul class="nav-links d-none d-md-flex">
+                <li><a href="index.html" class="nav-link-item"><i class="bi bi-arrow-left"></i> Back to Resume</a></li>
+                <li><a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank" class="nav-link-item"><i class="bi bi-instagram"></i> Instagram</a></li>
+                <li><a href="https://wa.me/+940722379560" target="_blank" class="nav-link-item"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
+            </ul>
+            <!-- Mobile Toggle -->
+            <button class="d-md-none btn btn-link text-white p-0" id="mobileMenuToggle" style="font-size: 1.5rem;">
+                <i class="bi bi-list"></i>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Mobile Drawer Menu -->
+    <div class="d-md-none" id="mobileDrawer" style="position: fixed; top: 85px; left: 50%; transform: translateX(-50%) scale(0.95); width: 90%; background: rgba(15, 15, 23, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; z-index: 999; display: none; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; text-align: center;">
+            <li><a href="index.html" class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i class="bi bi-arrow-left"></i> Back to Resume</a></li>
+            <li><a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank" class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i class="bi bi-instagram"></i> Instagram</a></li>
+            <li><a href="https://wa.me/+940722379560" target="_blank" class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero / Header Section -->
+    <section class="hero-section" id="home">
+        <!-- Nature Filter Button -->
+        <button class="btn btn-glass active filter-btn" onclick="filterGallery('nature')" id="btn-nature">
+            <i class="bi bi-tree-fill me-2 text-success"></i> Nature Photography
+        </button>
+
+        <!-- Avatar Container -->
+        <div class="hero-avatar-container">
+            <img src="my4to2.jpg" class="hero-avatar" alt="Nesandu Hesitha Photo">
+        </div>
+
+        <!-- Event Filter Button -->
+        <button class="btn btn-glass filter-btn" onclick="filterGallery('events')" id="btn-events">
+            <i class="bi bi-people-fill me-2 text-info"></i> Event Photography
+        </button>
+        <h1 class="hero-title" style="font-family: 'Outfit', sans-serif;">NH Photography</h1>
+        <div class="hero-subtitle">Affordable Promotions – DM for Details!</div>
+        <div class="social-links">
+            <a href="mailto:nesanduhm@icloud.com" class="btn-glass"><i class="bi bi-envelope-fill"></i> Email</a>
+            <a href="tel:+94777940340" class="btn-glass"><i class="bi bi-telephone-fill"></i> Call</a>
+            <a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank" class="btn-glass" style="background: rgba(217, 70, 239, 0.1); border-color: rgba(217, 70, 239, 0.3);"><i class="bi bi-instagram"></i> Instagram</a>
+            <a href="https://wa.me/+940722379560" target="_blank" class="btn-glass" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3);"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+        </div>
+    </section>
+
+    <!-- Photography Grid -->
+    <section id="gallery" style="background: transparent; border: none; box-shadow: none; padding: 0;">
+        <div class="container px-0">
+            <div class="row photography-grid">
+                <!-- Image 1 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img26.jpg" alt="Shot on Galaxy 2025" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">2025 Moments</h5>
+                            <p class="photo-card-text">#Shot on galaxy</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 2 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img36.jpg" alt="Sella Katharagama" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">@Sella Katharagama</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 3 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img13.jpeg" alt="Butterfly" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Butterfly</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 4 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img1.jpeg" alt="Parrot" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Parrot Spotted</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 5 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img2.jpeg" alt="Ruwanwelisaya" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Ruwanwelisaya</h5>
+                            <p class="photo-card-text">#Shot on canon eos 250d</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 6 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img3.jpeg" alt="Toque macaques" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Toque macaques (Rilawa)</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 7 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img7.jpg" alt="Sunset" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Random Sunset Moments</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 8 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img8.jpg" alt="Galle Dawn" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Dawn @Galle</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 9 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img9.jpg" alt="Pro Mode Shot" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Random Pro Mode Shot</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 10 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img4.jpeg" alt="Zindy Cat" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Hello People! I'm Zindy</h5>
+                            <p class="photo-card-text">#Shot on canon eos 250d</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 11 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img5.jpeg" alt="Magpie Robin" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">A Magpie Robin Bird</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 12 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img6.jpeg" alt="Pigeon Orchid" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Pigeon Orchid (Parevi Mal)</h5>
+                            <p class="photo-card-text">#Shot on canon eos 250d</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 13 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img14.jpeg" alt="Golden Hour Mini 2" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Golden Hour Moment</h5>
+                            <p class="photo-card-text">#Shot on DJI Mavic Mini 2</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 14 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img11.jpeg" alt="Avenra Seaside" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Seaside behind Avenra Hotel</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 15 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img12.jpg" alt="Water Drops" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Water Drops on Leaves</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 16 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img19.jpeg" alt="Galle Fort 1" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Golden Hour @ Galle Fort</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 17 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img20.jpeg" alt="Galle Fort 2" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Golden Hour @ Galle Fort</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 18 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img22.jpeg" alt="Galle Fort 3" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Golden Hour @ Galle Fort</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 19 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img17.jpg" alt="Cat" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Cat</h5>
+                            <p class="photo-card-text">#Shot on canon eos 250d</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 20 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img18.jpg" alt="Kingfishers" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Two Kingfishers Spotted</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 21 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img10.jpg" alt="360 Wackwella" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">360º @ Wackwella</h5>
+                            <p class="photo-card-text">#Shot on DJI Mavic Mini 2</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 22 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img23.jpeg" alt="Kanneliya 1" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">@ Kanneliya</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 23 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img28.jpeg" alt="Anagimala Ella 1" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Near Anagimala Ella, Kanneliya</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 24 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img25.jpeg" alt="Kanneliya 2" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">@ Kanneliya</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 25 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img24.jpeg" alt="Anagimala Ella 2" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Near Anagimala Ella, Kanneliya</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 26 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img27.jpg" alt="Tree Snake" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Tree Snake Spotted @ Kanneliya</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 27 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img29.jpeg" alt="Cicada" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Cicada exoskeleton Spotted</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 28 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img32.jpg" alt="Rainy Day" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Rainy Day</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 29 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img33.jpg" alt="Nuwara Eliya" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Dawn @ Nuwara Eliya</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 30 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img34.jpg" alt="Matara Fort" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Matara Fort</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 31 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img35.jpg" alt="Katharagama" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">@Katharagama</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 32 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img37.jpg" alt="Lunugamwehera" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">@Lunugamwehera Dam</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 33 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img38.jpg" alt="Wackwella" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">@Wackwella</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 34 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img42.jpg" alt="Galle Fort Sunset" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Sunset @ Galle Fort</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 35 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img31.jpg" alt="Stars" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Sky Full Of Stars</h5>
+                            <p class="photo-card-text">#Shot on canon eos 250d</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image 36 -->
+                <div class="col-md-4 col-sm-6">
+                    <div class="photo-card">
+                        <img src="images/img43.jpg" alt="Moon Venus" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Moon + Venus</h5>
+                            <p class="photo-card-text">#Shot on galaxy note</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Event 1 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img14.jpeg" alt="Richmond Sports Meet" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Richmond Sports Meet 2026</h5>
+                            <p class="photo-card-text">#Action Sports Photography</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 2 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img10.jpg" alt="Drone Event Coverage" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Exhibition Drone Coverage</h5>
+                            <p class="photo-card-text">#Aerial Event Capture</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 3 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img20.jpeg" alt="UoM Hackathon" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">University Hackathon 2025</h5>
+                            <p class="photo-card-text">#Tech Event Coverage</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 4 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img19.jpeg" alt="Galle Fort Shoot" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Outdoor Portrait Session</h5>
+                            <p class="photo-card-text">#Candid Portraits</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 5 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img11.jpeg" alt="Charity Seminar" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Sasnaka Sansada Seminar</h5>
+                            <p class="photo-card-text">#Volunteer Event Capture</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 6 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img22.jpeg" alt="Galle Fort Portrait" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Candid Couple Shoot</h5>
+                            <p class="photo-card-text">#Pre-Wedding Shoot</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 7 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img17.jpg" alt="Pet Event" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Pet Fair Portrait</h5>
+                            <p class="photo-card-text">#Pet Photography</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 8 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img8.jpg" alt="Galle Dawn Shoot" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Scenic Dawn Event Shoot</h5>
+                            <p class="photo-card-text">#Outdoor Event</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Event 9 -->
+                <div class="col-md-4 col-sm-6 gallery-item" data-category="events">
+                    <div class="photo-card">
+                        <img src="images/img33.jpg" alt="Nuwara Eliya Portrait" loading="lazy">
+                        <div class="photo-card-body">
+                            <h5 class="photo-card-title">Nuwara Eliya Travel Shoot</h5>
+                            <p class="photo-card-text">#Travel Event Coverage</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
+    </section>
 
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img26.jpg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">2025</h5>
-                        <p class="card-text">#Shot on galaxy</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Back to top button -->
+    <button id="backToTop" class="bi bi-chevron-up"></button>
 
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img36.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">@Sella Katharagama</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img13.jpeg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Butterfly</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 NH Photography. All Rights Reserved.</p>
+            <p style="margin-top: 10px;">
+                <img src="nhlogo.png" alt="logo" width="60" height="60" style="border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);">
+            </p>
         </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img1.jpeg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Parrot Spotted</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img2.jpeg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Ruwanwelisaya</h5>
-                        <p class="card-text">#Shot on canon eos 250d</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img3.jpeg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Toque macaques(Rilawa)</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img7.jpg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Random Sunset Moments</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img8.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Dawn @Galle</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img9.jpg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Random pro mode shot</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img4.jpeg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Hello People! I'm Zindy</h5>
-                        <p class="card-text">#Shot on canon eos 250d</p>
-
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img5.jpeg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">A Magpie Robin bird</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img6.jpeg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Pigeon Orchid - Parevi Mal</h5>
-                        <p class="card-text">#Shot on canon eos 250d</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img14.jpeg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Golden Hour Moment</h5>
-                        <p class="card-text">#Shot on DJI Mavic Mini2</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img11.jpeg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Random shot at Seaside behind Avenra Hotel</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img12.jpg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Water Drops on Leaves</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img19.jpeg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Golden Hour @ Galle Fort</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img20.jpeg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Golden Hour @ Galle Fort</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img22.jpeg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Golden Hour @ Galle Fort</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img17.jpg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Cat</h5>
-                        <p class="card-text">#Shot on canon eos 250d</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img18.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Two Kingfishers Spotted</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img10.jpg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">360º @ Wackwella</h5>
-                        <p class="card-text">#Shot on DJI Mavic Mini2</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img23.jpeg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">@ Kanneliya</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img28.jpeg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Near Anagimala Ella,Kanneliya</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img25.jpeg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">@ Kanneliya</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img24.jpeg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <h5 class="card-title">Near Anagimala Ella,Kanneliya</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img27.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Tree snake Spotted @ Kanneliya Rain Forest</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img29.jpeg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <h5 class="card-title">Cicada exoskeleton Spotted @ Kanneliya Rain Forest</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img32.jpg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Rainy Day</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img33.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Dawn @ Nuwara Eliya</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img34.jpg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Matara Fort</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img35.jpg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">@Katharagama</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img37.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">@Lunugamwehera Dam</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img38.jpg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">@Wackwella</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-
-    <div class="container my-4">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img42.jpg" class="card-img-top" alt="Image 1">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Just before the sunset @ Galle Fort</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img31.jpg" class="card-img-top" alt="Image 2">
-                    <div class="card-body">
-                        <h5 class="card-title">Sky Full Of Stars</h5>
-                        <p class="card-text">#Shot on canon eos 250d</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-4">
-                <div class="card">
-                    <img src="images/img43.jpg" class="card-img-top" alt="Image 3">
-                    <div class="card-body">
-                        <br>
-                        <h5 class="card-title">Moon + Venus</h5>
-                        <p class="card-text">#Shot on galaxy note</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><br>
-
-    <button id="backToTop" onclick="scrollToTop()" class="bi bi-arrow-bar-up"></button>
-
-
-    <footer style="background-color: rgb(4, 19, 31);">
-
-        <p>&copy; ALL RIGHTS RESERVED
-            <img src="nhlogo.png" alt="logo" width="100" height="100" style="border-radius: 50%;"></img>
-        </p>
     </footer>
 
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Interactive Features Scripts -->
     <script>
-        if (window.location.pathname.includes("index.html")) {
-            document.body.style.background = "url('background.jpg') no-repeat center center fixed";
-            document.body.style.backgroundSize = "cover";
-        } else if (window.location.pathname.includes("photographynh.html")) {
-            document.body.style.background = "url('background2.jpg') no-repeat center center fixed";
-            document.body.style.backgroundSize = "cover";
-        }
+        // Mobile Menu Toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        
+        mobileMenuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (mobileDrawer.style.display === 'none' || mobileDrawer.style.display === '') {
+                mobileDrawer.style.display = 'block';
+                mobileMenuToggle.innerHTML = '<i class="bi bi-x-lg"></i>';
+            } else {
+                mobileDrawer.style.display = 'none';
+                mobileMenuToggle.innerHTML = '<i class="bi bi-list"></i>';
+            }
+        });
 
+        // Close drawer on background click
+        document.addEventListener('click', () => {
+            mobileDrawer.style.display = 'none';
+            mobileMenuToggle.innerHTML = '<i class="bi bi-list"></i>';
+        });
 
-        window.onscroll = function () { scrollFunction() };
+        // Back to Top Button
+        const backToTopButton = document.getElementById("backToTop");
+
+        window.onscroll = function () {
+            scrollFunction();
+        };
 
         function scrollFunction() {
-            let button = document.getElementById("backToTop");
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                button.style.display = "block";
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopButton.style.display = "flex";
             } else {
-                button.style.display = "none";
+                backToTopButton.style.display = "none";
             }
         }
 
-        function scrollToTop() {
+        backToTopButton.addEventListener("click", () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Tag nature items automatically on load
+        const grid = document.querySelector('.photography-grid');
+        Array.from(grid.children).forEach(col => {
+            if (!col.hasAttribute('data-category')) {
+                col.classList.add('gallery-item');
+                col.setAttribute('data-category', 'nature');
+            }
+        });
+
+        // Filter Gallery function
+        function filterGallery(category) {
+            // Update active state on buttons
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            if (category === 'nature') {
+                document.getElementById('btn-nature').classList.add('active');
+            } else {
+                document.getElementById('btn-events').classList.add('active');
+            }
+            
+            // Toggle visibility of items
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (item.getAttribute('data-category') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         }
 
-
-
+        // Initialize category
+        window.addEventListener('DOMContentLoaded', () => {
+            filterGallery('nature');
+        });
     </script>
 </body>
 
