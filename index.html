@@ -99,9 +99,9 @@
         <p
             style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 0; text-align: justify; line-height: 1.8;">
             A passionate IT student skilled in web development, graphic design, and video editing,
-            with experience in Java and basic Python. I am highly motivated to solve real-world problems
-            using modern software technologies and digital creative solutions. Always looking for new opportunities to
-            grow, collaborate, and contribute my skills effectively.
+            with experience in Java and basic Python.I am highly motivated to solve real-world problems
+            using modern software technologies and digital creative solutions.Always looking for new opportunities to
+            grow, collaborate,and contribute my skills effectively.
         </p>
     </section>
 
@@ -236,58 +236,145 @@
     <section id="projects">
         <h2>Featured Projects</h2>
         <div class="projects-grid">
+            <!-- Lost & Found System -->
             <div class="project-card">
                 <div>
                     <div class="project-icon"><i class="bi bi-search"></i></div>
                     <h4 class="project-title">Lost & Found System</h4>
-                    <p class="project-desc">A full-stack web application designed to report and recover lost items on
-                        campus. Built using Spring Security JWT auth, MySQL database, and a React TypeScript UI.</p>
+                    <p class="project-desc">A full-stack web application designed to report and recover lost items on campus. Built with Spring Security JWT auth, MySQL database, and a React TypeScript UI.</p>
                 </div>
-                <div class="project-tags">
-                    <span class="project-tag">React (TS)</span>
-                    <span class="project-tag">Spring Boot</span>
-                    <span class="project-tag">MySQL</span>
-                    <span class="project-tag">JWT</span>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag">React (TS)</span>
+                        <span class="project-tag">Spring Boot</span>
+                        <span class="project-tag">MySQL</span>
+                        <span class="project-tag">JWT</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="https://github.com/Nezz77/Lost-FoundSystem" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> Backend</a>
+                    <a href="https://github.com/Nezz77/Lost-FoundSystem_Frontend" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> Frontend</a>
                 </div>
             </div>
+
+            <!-- airDraw -->
             <div class="project-card">
                 <div>
-                    <div class="project-icon"><i class="bi bi-mortarboard"></i></div>
-                    <h4 class="project-title">Course Registration System</h4>
-                    <p class="project-desc">A desktop application created for seamless course scheduling and
-                        registration. Includes a JavaFX graphical user interface powered by a MySQL database back-end.
-                    </p>
+                    <div class="project-icon"><i class="bi bi-brush"></i></div>
+                    <h4 class="project-title">airDraw</h4>
+                    <p class="project-desc">A computer vision-based air writing and drawing application that tracks hand gestures to draw on a virtual canvas in real-time. Powered by OpenCV and MediaPipe.</p>
                 </div>
-                <div class="project-tags">
-                    <span class="project-tag">JavaFX</span>
-                    <span class="project-tag">Java OOP</span>
-                    <span class="project-tag">MySQL</span>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">OpenCV</span>
+                        <span class="project-tag">MediaPipe</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="https://github.com/Nezz77/airDraw" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> View Repo</a>
                 </div>
             </div>
+
+            <!-- Hologram Fan Array (Fusion5) -->
+            <div class="project-card" style="border-color: rgba(99, 102, 241, 0.3); background: rgba(99, 102, 241, 0.03);">
+                <div>
+                    <div class="project-icon" style="color: var(--accent);"><i class="bi bi-cpu-fill"></i></div>
+                    <h4 class="project-title">Hologram Fan Array (Fusion5)</h4>
+                    <p class="project-desc">
+                        Developed under the module <strong>Microcontroller Based Application Development Project</strong>. 
+                        This is the <strong>first-ever hologram built in Sri Lanka</strong> specifically incorporating a vertical 
+                        overlapping mechanism. Drives dual ESP32-S3 controllers for POV LED rendering, polls ultrasonic safety shields, 
+                        and broadcasts real-time statistics over WebSockets.
+                    </p>
+                </div>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag" style="background: rgba(99, 102, 241, 0.2); color: #fff;">ESP32-S3</span>
+                        <span class="project-tag">Arduino C++</span>
+                        <span class="project-tag">FastLED</span>
+                        <span class="project-tag">WebSockets</span>
+                        <span class="project-tag">Hardware</span>
+                    </div>
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="https://github.com/Nezz77/hologram" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> Controller</a>
+                    <a href="https://github.com/Nezz77/hologram_fan_software_Overlap" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> App Software</a>
+                </div>
+            </div>
+
+            <!-- Course Registration System -->
+            <div class="project-card">
+                <div>
+                    <div class="project-icon"><i class="bi bi-mortarboard-fill"></i></div>
+                    <h4 class="project-title">Course Registration System</h4>
+                    <p class="project-desc">A desktop application created for academic course registration. Features a rich JavaFX graphical user interface backed by a relational MySQL database.</p>
+                </div>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag">JavaFX</span>
+                        <span class="project-tag">Java OOP</span>
+                        <span class="project-tag">MySQL</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="https://github.com/Nezz77/CRS_PROJECT" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> View Repo</a>
+                </div>
+            </div>
+
+            <!-- FutureTech Shop -->
+            <div class="project-card">
+                <div>
+                    <div class="project-icon"><i class="bi bi-cart3"></i></div>
+                    <h4 class="project-title">FutureTech Shop</h4>
+                    <p class="project-desc">A beautiful, modern online tech shop landing page and frontend showcase. Built with smooth animations and fully responsive design.</p>
+                </div>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag">HTML5</span>
+                        <span class="project-tag">CSS3</span>
+                        <span class="project-tag">JavaScript</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="https://github.com/Nezz77/FutureTech" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> View Repo</a>
+                </div>
+            </div>
+
+            <!-- Boarding Place Finder -->
+            <div class="project-card">
+                <div>
+                    <div class="project-icon"><i class="bi bi-house-door-fill"></i></div>
+                    <h4 class="project-title">Boarding Place Finder</h4>
+                    <p class="project-desc">A web application designed to help university students and tenants search for and locate suitable boarding places. Features clean user forms and interactive layout.</p>
+                </div>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">HTML5</span>
+                        <span class="project-tag">CSS3</span>
+                    </div>
+                </div>
+                <div>
+                    <a href="https://github.com/Nezz77/Boarding_place" target="_blank" class="btn-glass py-1 px-3" style="font-size: 0.8rem;"><i class="bi bi-github"></i> View Repo</a>
+                </div>
+            </div>
+
+            <!-- Student Marks Manager -->
             <div class="project-card">
                 <div>
                     <div class="project-icon"><i class="bi bi-bar-chart-steps"></i></div>
                     <h4 class="project-title">Student Marks Manager</h4>
-                    <p class="project-desc">An object-oriented program designed to track, store, calculate, and evaluate
-                        student exam grades and academic standings.</p>
+                    <p class="project-desc">A foundational Java console project showcasing core OOP principles (inheritance, polymorphism, encapsulation) to manage student records and marks.</p>
                 </div>
-                <div class="project-tags">
-                    <span class="project-tag">Java Core</span>
-                    <span class="project-tag">OOP Principles</span>
-                    <span class="project-tag">Console App</span>
+                <div class="mb-3">
+                    <div class="project-tags">
+                        <span class="project-tag">Java Core</span>
+                        <span class="project-tag">OOP</span>
+                    </div>
                 </div>
-            </div>
-            <div class="project-card">
                 <div>
-                    <div class="project-icon"><i class="bi bi-shop"></i></div>
-                    <h4 class="project-title">Tech Shop Frontend</h4>
-                    <p class="project-desc">A beautiful, fully responsive landing page and product showcase layout built
-                        for an online electronics tech shop.</p>
-                </div>
-                <div class="project-tags">
-                    <span class="project-tag">HTML5</span>
-                    <span class="project-tag">CSS Grid</span>
-                    <span class="project-tag">JavaScript</span>
+                    <span class="badge bg-secondary p-2 rounded-3 text-white" style="font-size: 0.75rem; border: 1px solid rgba(255, 255, 255, 0.1);"><i class="bi bi-code-slash"></i> Local Project</span>
                 </div>
             </div>
         </div>
