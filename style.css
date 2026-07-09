@@ -776,6 +776,24 @@ footer a:hover {
     overflow: hidden;
     margin-bottom: 24px;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Invisible overlay covering the image to prevent saving/dragging */
+.photo-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    background: rgba(0, 0, 0, 0);
+    pointer-events: auto;
 }
 
 .photo-card img {
@@ -784,6 +802,8 @@ footer a:hover {
     display: block;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    -webkit-user-drag: none;
+    user-drag: none;
 }
 
 .photo-card:hover {
@@ -806,6 +826,8 @@ footer a:hover {
 .photo-card-body {
     padding: 16px 20px;
     text-align: center;
+    position: relative;
+    z-index: 6;
 }
 
 .photo-card-title {
@@ -857,6 +879,55 @@ footer a:hover {
         margin: 10px 5px;
     }
 }
+
+/* 3D Canvas & Bubble Containers */
+#hero-3d-canvas {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.glass-bubble {
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(6, 182, 212, 0.12) 0%, rgba(99, 102, 241, 0.04) 50%, transparent 75%);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    z-index: 5;
+}
+
+#camera-bubble {
+    left: 60px;
+    top: 38%;
+    transform: translateY(-50%);
+}
+
+#gimbal-bubble {
+    left: 170px;
+    top: 68%;
+    transform: translateY(-50%);
+}
+
+#drone-bubble {
+    right: 60px;
+    top: 38%;
+    transform: translateY(-50%);
+}
+
+#remote-bubble {
+    right: 170px;
+    top: 68%;
+    transform: translateY(-50%);
+}
+
 
 
 

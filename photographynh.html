@@ -18,9 +18,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
 <body class="photography-page">
+    <!-- Onscreen Debug Console -->
+    <div id="debug-log"
+        style="position:fixed; bottom: 10px; left: 10px; color: #ff0000; background: rgba(0,0,0,0.85); z-index: 10000; font-family: monospace; font-size: 11px; max-height: 150px; overflow: auto; padding: 8px; border: 1.5px solid #ff0000; border-radius: 5px; display: none;">
+    </div>
+    <script>
+        window.onerror = function (msg, url, line) {
+            const debug = document.getElementById('debug-log');
+            if (debug) {
+                debug.style.display = 'block';
+                debug.innerHTML += `<div>Error: ${msg} (${line})</div>`;
+            }
+            return false;
+        };
+    </script>
     <!-- Background Elements -->
     <div class="bg-image-overlay"></div>
     <div class="glow-orbs">
@@ -38,8 +53,10 @@
             </a>
             <ul class="nav-links d-none d-md-flex">
                 <li><a href="index.html" class="nav-link-item"><i class="bi bi-arrow-left"></i> Back to Resume</a></li>
-                <li><a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank" class="nav-link-item"><i class="bi bi-instagram"></i> Instagram</a></li>
-                <li><a href="https://wa.me/+940722379560" target="_blank" class="nav-link-item"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
+                <li><a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank"
+                        class="nav-link-item"><i class="bi bi-instagram"></i> Instagram</a></li>
+                <li><a href="https://wa.me/+940722379560" target="_blank" class="nav-link-item"><i
+                            class="bi bi-whatsapp"></i> WhatsApp</a></li>
             </ul>
             <!-- Mobile Toggle -->
             <button class="d-md-none btn btn-link text-white p-0" id="mobileMenuToggle" style="font-size: 1.5rem;">
@@ -49,16 +66,32 @@
     </div>
 
     <!-- Mobile Drawer Menu -->
-    <div class="d-md-none" id="mobileDrawer" style="position: fixed; top: 85px; left: 50%; transform: translateX(-50%) scale(0.95); width: 90%; background: rgba(15, 15, 23, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; z-index: 999; display: none; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; text-align: center;">
-            <li><a href="index.html" class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i class="bi bi-arrow-left"></i> Back to Resume</a></li>
-            <li><a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank" class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i class="bi bi-instagram"></i> Instagram</a></li>
-            <li><a href="https://wa.me/+940722379560" target="_blank" class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i class="bi bi-whatsapp"></i> WhatsApp</a></li>
+    <div class="d-md-none" id="mobileDrawer"
+        style="position: fixed; top: 85px; left: 50%; transform: translateX(-50%) scale(0.95); width: 90%; background: rgba(15, 15, 23, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; z-index: 999; display: none; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <ul
+            style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 15px; text-align: center;">
+            <li><a href="index.html" class="mobile-nav-link text-white text-decoration-none d-block py-2"
+                    style="font-weight: 500;"><i class="bi bi-arrow-left"></i> Back to Resume</a></li>
+            <li><a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank"
+                    class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i
+                        class="bi bi-instagram"></i> Instagram</a></li>
+            <li><a href="https://wa.me/+940722379560" target="_blank"
+                    class="mobile-nav-link text-white text-decoration-none d-block py-2" style="font-weight: 500;"><i
+                        class="bi bi-whatsapp"></i> WhatsApp</a></li>
         </ul>
     </div>
 
     <!-- Hero / Header Section -->
     <section class="hero-section" id="home">
+        <!-- 3D Glass Bubbles Backdrop -->
+        <div id="camera-bubble" class="glass-bubble d-none d-lg-block"></div>
+        <div id="gimbal-bubble" class="glass-bubble d-none d-lg-block"></div>
+        <div id="drone-bubble" class="glass-bubble d-none d-lg-block"></div>
+        <div id="remote-bubble" class="glass-bubble d-none d-lg-block"></div>
+
+        <!-- Single High-Performance WebGL Canvas -->
+        <canvas id="hero-3d-canvas" class="d-none d-lg-block"></canvas>
+
         <!-- Nature Filter Button -->
         <button class="btn btn-glass active filter-btn" onclick="filterGallery('nature')" id="btn-nature">
             <i class="bi bi-tree-fill me-2 text-success"></i> Nature Photography
@@ -76,10 +109,18 @@
         <h1 class="hero-title" style="font-family: 'Outfit', sans-serif;">NH Photography</h1>
         <div class="hero-subtitle">Affordable Promotions – DM for Details!</div>
         <div class="social-links">
-            <a href="mailto:nesanduhm@icloud.com" class="btn-glass"><i class="bi bi-envelope-fill"></i> Email</a>
-            <a href="tel:+94777940340" class="btn-glass"><i class="bi bi-telephone-fill"></i> Call</a>
-            <a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank" class="btn-glass" style="background: rgba(217, 70, 239, 0.1); border-color: rgba(217, 70, 239, 0.3);"><i class="bi bi-instagram"></i> Instagram</a>
-            <a href="https://wa.me/+940722379560" target="_blank" class="btn-glass" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3);"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+            <a href="mailto:nesanduhm@icloud.com" class="btn-glass"
+                style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3);"><i
+                    class="bi bi-envelope-fill"></i> Email</a>
+            <a href="tel:+94777940340" class="btn-glass"
+                style="background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3);"><i
+                    class="bi bi-telephone-fill"></i> Call</a>
+            <a href="https://www.instagram.com/nezz77_?utm_source=qr&igsh=cGF3MDUxYndkaWI3" target="_blank"
+                class="btn-glass" style="background: rgba(217, 70, 239, 0.1); border-color: rgba(217, 70, 239, 0.3);"><i
+                    class="bi bi-instagram"></i> Instagram</a>
+            <a href="https://wa.me/+940722379560" target="_blank" class="btn-glass"
+                style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3);"><i
+                    class="bi bi-whatsapp"></i> WhatsApp</a>
         </div>
     </section>
 
@@ -592,7 +633,8 @@
         <div class="container">
             <p>&copy; 2026 NH Photography. All Rights Reserved.</p>
             <p style="margin-top: 10px;">
-                <img src="nhlogo.png" alt="logo" width="60" height="60" style="border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);">
+                <img src="nhlogo.png" alt="logo" width="60" height="60"
+                    style="border-radius: 50%; border: 1px solid rgba(255,255,255,0.1);">
             </p>
         </div>
     </footer>
@@ -605,7 +647,7 @@
         // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileDrawer = document.getElementById('mobileDrawer');
-        
+
         mobileMenuToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             if (mobileDrawer.style.display === 'none' || mobileDrawer.style.display === '') {
@@ -656,13 +698,13 @@
             // Update active state on buttons
             const buttons = document.querySelectorAll('.filter-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
-            
+
             if (category === 'nature') {
                 document.getElementById('btn-nature').classList.add('active');
             } else {
                 document.getElementById('btn-events').classList.add('active');
             }
-            
+
             // Toggle visibility of items
             const items = document.querySelectorAll('.gallery-item');
             items.forEach(item => {
@@ -677,6 +719,501 @@
         // Initialize category
         window.addEventListener('DOMContentLoaded', () => {
             filterGallery('nature');
+        })
+        // ==========================================
+        // 3D Hovering Camera, Gimbal, Drone, and Remote Models using a single WebGL Canvas
+        // ==========================================
+        
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX - windowHalfX) / 100;
+            mouseY = (event.clientY - windowHalfY) / 100;
+        });
+
+        // Initialize 3D Engine
+        window.addEventListener('load', () => {
+            const canvas = document.getElementById('hero-3d-canvas');
+            const container = document.getElementById('home'); // Hero Section container
+            if (!canvas || !container) return;
+
+            let width = container.clientWidth;
+            let height = container.clientHeight;
+
+            const scene = new THREE.Scene();
+            
+            const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+            camera.position.z = 7;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+            scene.add(ambientLight);
+
+            const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.95);
+            dirLight1.position.set(5, 5, 5);
+            scene.add(dirLight1);
+
+            const dirLight2 = new THREE.DirectionalLight(0x06b6d4, 0.55); // Cyan glow light
+            dirLight2.position.set(-5, -5, 2);
+            scene.add(dirLight2);
+
+            // Create Group for each model for positioning and independent mouse tilt
+            const cameraGroup = new THREE.Group();
+            const gimbalGroup = new THREE.Group();
+            const droneGroup = new THREE.Group();
+            const remoteGroup = new THREE.Group();
+
+            scene.add(cameraGroup);
+            scene.add(gimbalGroup);
+            scene.add(droneGroup);
+            scene.add(remoteGroup);
+
+            // ==========================================
+            // MODEL 1: DSLR CAMERA
+            // ==========================================
+            const cameraSub = new THREE.Group();
+            cameraGroup.add(cameraSub);
+
+            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.6, metalness: 0.1 });
+            const gripMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.85 });
+            const lensMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.3, metalness: 0.8 });
+            const glassMat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.05, metalness: 0.95, transparent: true, opacity: 0.8 });
+            const redDetailMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, roughness: 0.4 });
+            const metalMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.8, roughness: 0.2 });
+            const screenMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 }); // Glowing cyan screen!
+            const flashGlassMat = new THREE.MeshStandardMaterial({ color: 0xfef08a, roughness: 0.1, metalness: 0.8, transparent: true, opacity: 0.8 });
+
+            // Camera Body
+            const bodyGeo = new THREE.BoxGeometry(1.6, 1.05, 0.65);
+            const body = new THREE.Mesh(bodyGeo, bodyMat);
+            cameraSub.add(body);
+
+            // LCD Display Screen on back (facing -z)
+            const screenGeo = new THREE.PlaneGeometry(1.15, 0.75);
+            const screen = new THREE.Mesh(screenGeo, screenMat);
+            screen.position.set(0, -0.04, -0.33);
+            screen.rotation.y = Math.PI; // Point backwards
+            cameraSub.add(screen);
+
+            // Screen Border Frame
+            const frameGeo = new THREE.BoxGeometry(1.23, 0.83, 0.02);
+            const frame = new THREE.Mesh(frameGeo, gripMat);
+            frame.position.set(0, -0.04, -0.325);
+            cameraSub.add(frame);
+
+            // Grip (curved handle side)
+            const gripGeo = new THREE.CylinderGeometry(0.35, 0.35, 0.95, 16);
+            const grip = new THREE.Mesh(gripGeo, gripMat);
+            grip.position.set(-0.7, 0, 0.12);
+            grip.scale.set(0.6, 1, 1);
+            cameraSub.add(grip);
+
+            // Viewfinder hump
+            const vfGeo = new THREE.BoxGeometry(0.48, 0.24, 0.48);
+            const vf = new THREE.Mesh(vfGeo, bodyMat);
+            vf.position.set(0, 0.58, 0);
+            cameraSub.add(vf);
+
+            // Hot shoe metal plate
+            const hotShoeGeo = new THREE.BoxGeometry(0.28, 0.03, 0.28);
+            const hotShoe = new THREE.Mesh(hotShoeGeo, metalMat);
+            hotShoe.position.set(0, 0.7, 0);
+            cameraSub.add(hotShoe);
+
+            // Lens Barrel
+            const lensBarrelGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.85, 32);
+            const lensBarrel = new THREE.Mesh(lensBarrelGeo, bodyMat);
+            lensBarrel.rotation.x = Math.PI / 2;
+            lensBarrel.position.set(0.16, -0.04, 0.6);
+            cameraSub.add(lensBarrel);
+
+            // Focus Ring
+            const ringGeo = new THREE.CylinderGeometry(0.49, 0.49, 0.25, 32);
+            const ring = new THREE.Mesh(ringGeo, gripMat);
+            ring.rotation.x = Math.PI / 2;
+            ring.position.set(0.16, -0.04, 0.5);
+            cameraSub.add(ring);
+
+            // Red Ring (L Series)
+            const redRingGeo = new THREE.TorusGeometry(0.48, 0.015, 12, 32);
+            const redRing = new THREE.Mesh(redRingGeo, redDetailMat);
+            redRing.position.set(0.16, -0.04, 0.9);
+            cameraSub.add(redRing);
+
+            // Lens Hood
+            const hoodGeo = new THREE.CylinderGeometry(0.54, 0.48, 0.2, 32, 1, true);
+            const hood = new THREE.Mesh(hoodGeo, bodyMat);
+            hood.rotation.x = Math.PI / 2;
+            hood.position.set(0.16, -0.04, 0.98);
+            cameraSub.add(hood);
+
+            // Lens Glass
+            const lensGlassGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.03, 32);
+            const lensGlass = new THREE.Mesh(lensGlassGeo, glassMat);
+            lensGlass.rotation.x = Math.PI / 2;
+            lensGlass.position.set(0.16, -0.04, 0.89);
+            cameraSub.add(lensGlass);
+
+            // Shutter Button
+            const shutterGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.1, 16);
+            const shutter = new THREE.Mesh(shutterGeo, metalMat);
+            shutter.position.set(-0.6, 0.55, 0.15);
+            cameraSub.add(shutter);
+
+            // Mode Dial
+            const dialGeo = new THREE.CylinderGeometry(0.13, 0.13, 0.06, 20);
+            const dial = new THREE.Mesh(dialGeo, bodyMat);
+            dial.position.set(0.44, 0.55, 0.12);
+            cameraSub.add(dial);
+
+            // Flash element
+            const flashGeo = new THREE.BoxGeometry(0.24, 0.12, 0.02);
+            const flash = new THREE.Mesh(flashGeo, flashGlassMat);
+            flash.position.set(0, 0.54, 0.25);
+            cameraSub.add(flash);
+
+            cameraSub.scale.set(0.9, 0.9, 0.9);
+            cameraSub.rotation.y = -Math.PI / 6;
+
+            // ==========================================
+            // MODEL 2: MOBILE GIMBAL
+            // ==========================================
+            const gimbalSub = new THREE.Group();
+            gimbalGroup.add(gimbalSub);
+
+            // Handle
+            const handleGeo = new THREE.CylinderGeometry(0.09, 0.09, 0.9, 16);
+            const handle = new THREE.Mesh(handleGeo, bodyMat);
+            gimbalSub.add(handle);
+
+            // Control Base
+            const baseGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.2, 16);
+            const base = new THREE.Mesh(baseGeo, bodyMat);
+            base.position.set(0, 0.35, 0.02);
+            gimbalSub.add(base);
+
+            // Joystick knob
+            const joystickGeo = new THREE.SphereGeometry(0.03, 8, 8);
+            const joystick = new THREE.Mesh(joystickGeo, gripMat);
+            joystick.position.set(0, 0.4, 0.14);
+            gimbalSub.add(joystick);
+
+            // Gimbal Arm 1
+            const arm1Geo = new THREE.BoxGeometry(0.06, 0.32, 0.06);
+            const arm1 = new THREE.Mesh(arm1Geo, bodyMat);
+            arm1.position.set(0.06, 0.56, -0.04);
+            arm1.rotation.z = Math.PI / 12;
+            gimbalSub.add(arm1);
+
+            // Gimbal Arm 2
+            const arm2Geo = new THREE.BoxGeometry(0.24, 0.06, 0.06);
+            const arm2 = new THREE.Mesh(arm2Geo, bodyMat);
+            arm2.position.set(0.14, 0.7, 0);
+            gimbalSub.add(arm2);
+
+            // Smartphone Clamp
+            const clampGeo = new THREE.BoxGeometry(0.08, 0.16, 0.24);
+            const clamp = new THREE.Mesh(clampGeo, bodyMat);
+            clamp.position.set(0.26, 0.7, 0.06);
+            gimbalSub.add(clamp);
+
+            // Smartphone (Mounted)
+            const phoneGroup = new THREE.Group();
+            phoneGroup.position.set(0.26, 0.7, 0.06);
+            
+            const phoneGeo = new THREE.BoxGeometry(0.05, 1.05, 0.52);
+            const phoneMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.3, metalness: 0.7 });
+            const phone = new THREE.Mesh(phoneGeo, phoneMat);
+            phoneGroup.add(phone);
+
+            // Glowing screen
+            const phoneScreenGeo = new THREE.BoxGeometry(0.01, 1.0, 0.48);
+            const phoneScreen = new THREE.Mesh(phoneScreenGeo, glassMat);
+            phoneScreen.position.set(0.027, 0, 0);
+            phoneGroup.add(phoneScreen);
+
+            gimbalSub.add(phoneGroup);
+            gimbalSub.position.set(-0.15, -0.3, 0);
+            gimbalSub.scale.set(0.9, 0.9, 0.9);
+
+            // ==========================================
+            // MODEL 3: DJI MAVIC DRONE
+            // ==========================================
+            const droneSub = new THREE.Group();
+            droneGroup.add(droneSub);
+
+            const droneBodyMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.4, metalness: 0.2 });
+            const darkMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.6 });
+            const propMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.9, transparent: true, opacity: 0.6 });
+            const stripeMat = new THREE.MeshStandardMaterial({ color: 0xea580c, roughness: 0.4 }); // Orange stripe
+            const ledGreenMat = new THREE.MeshBasicMaterial({ color: 0x22c55e });
+            const ledRedMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+
+            // Drone Body
+            const bodyGeo3D = new THREE.BoxGeometry(0.4, 0.24, 1.05);
+            const body3D = new THREE.Mesh(bodyGeo3D, droneBodyMat);
+            droneSub.add(body3D);
+
+            // Front obstacle sensors
+            const sensorGeo3D = new THREE.SphereGeometry(0.04, 8, 8);
+            const sensorL = new THREE.Mesh(sensorGeo3D, darkMat);
+            sensorL.position.set(-0.13, 0.04, 0.53);
+            droneSub.add(sensorL);
+
+            const sensorR = new THREE.Mesh(sensorGeo3D, darkMat);
+            sensorR.position.set(0.13, 0.04, 0.53);
+            droneSub.add(sensorR);
+
+            // Gimbal + Lens on front bottom
+            const gimbalGeo3D = new THREE.SphereGeometry(0.16, 16, 16);
+            const gimbal3D = new THREE.Mesh(gimbalGeo3D, darkMat);
+            gimbal3D.position.set(0, -0.14, 0.44);
+            droneSub.add(gimbal3D);
+
+            const lensGeo3D = new THREE.CylinderGeometry(0.05, 0.05, 0.1, 12);
+            const lens3D = new THREE.Mesh(lensGeo3D, darkMat);
+            lens3D.rotation.x = Math.PI / 2;
+            lens3D.position.set(0, -0.14, 0.53);
+            droneSub.add(lens3D);
+
+            // Four Arms
+            const armGeo3D = new THREE.BoxGeometry(0.08, 0.05, 0.65);
+            
+            // FL arm with Orange stripe
+            const armFL = new THREE.Mesh(armGeo3D, droneBodyMat);
+            armFL.position.set(0.24, 0.06, 0.32);
+            armFL.rotation.y = Math.PI / 4;
+            droneSub.add(armFL);
+
+            const stripeFL = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.06, 0.12), stripeMat);
+            stripeFL.position.set(0.32, 0.06, 0.4);
+            stripeFL.rotation.y = Math.PI / 4;
+            droneSub.add(stripeFL);
+
+            // FR arm with Orange stripe
+            const armFR = new THREE.Mesh(armGeo3D, droneBodyMat);
+            armFR.position.set(-0.24, 0.06, 0.32);
+            armFR.rotation.y = -Math.PI / 4;
+            droneSub.add(armFR);
+
+            const stripeFR = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.06, 0.12), stripeMat);
+            stripeFR.position.set(-0.32, 0.06, 0.4);
+            stripeFR.rotation.y = -Math.PI / 4;
+            droneSub.add(stripeFR);
+
+            const armBL = new THREE.Mesh(armGeo3D, droneBodyMat);
+            armBL.position.set(0.24, 0.06, -0.32);
+            armBL.rotation.y = -Math.PI / 4;
+            droneSub.add(armBL);
+
+            const armBR = new THREE.Mesh(armGeo3D, droneBodyMat);
+            armBR.position.set(-0.24, 0.06, -0.32);
+            armBR.rotation.y = Math.PI / 4;
+            droneSub.add(armBR);
+
+            // Motors & Nav Lights
+            const motorGeo3D = new THREE.CylinderGeometry(0.08, 0.08, 0.1, 12);
+            const motorPositions = [
+                { x: 0.58, y: 0.1, z: 0.55 },
+                { x: -0.58, y: 0.1, z: 0.55 },
+                { x: 0.58, y: 0.1, z: -0.55 },
+                { x: -0.58, y: 0.1, z: -0.55 }
+            ];
+
+            motorPositions.forEach((pos, index) => {
+                const motor = new THREE.Mesh(motorGeo3D, darkMat);
+                motor.position.set(pos.x, pos.y, pos.z);
+                droneSub.add(motor);
+
+                // LED
+                const ledGeo3D = new THREE.SphereGeometry(0.03, 8, 8);
+                const led = new THREE.Mesh(ledGeo3D, index < 2 ? ledRedMat : ledGreenMat);
+                led.position.set(pos.x * 1.04, pos.y - 0.05, pos.z * 1.04);
+                droneSub.add(led);
+            });
+
+            // Propellers
+            const propBladeGeo3D = new THREE.BoxGeometry(0.65, 0.004, 0.04);
+            const props = [];
+            motorPositions.forEach(pos => {
+                const prop = new THREE.Mesh(propBladeGeo3D, propMat);
+                prop.position.set(pos.x, pos.y + 0.06, pos.z);
+                droneSub.add(prop);
+                props.push(prop);
+            });
+
+            droneSub.rotation.x = Math.PI / 12;
+            droneSub.scale.set(0.9, 0.9, 0.9);
+
+            // ==========================================
+            // MODEL 4: DRONE REMOTE
+            // ==========================================
+            const remoteSub = new THREE.Group();
+            remoteGroup.add(remoteSub);
+
+            // RC Body
+            const rcBodyGeo = new THREE.BoxGeometry(0.95, 0.6, 0.24);
+            const rcBody = new THREE.Mesh(rcBodyGeo, droneBodyMat);
+            remoteSub.add(rcBody);
+
+            // RC Screen
+            const rcScreenGeo = new THREE.BoxGeometry(0.8, 0.36, 0.02);
+            const rcScreenMat = new THREE.MeshStandardMaterial({ color: 0x020617, roughness: 0.1, metalness: 0.9 });
+            const rcScreen = new THREE.Mesh(rcScreenGeo, rcScreenMat);
+            rcScreen.position.set(0, -0.04, 0.122);
+            remoteSub.add(rcScreen);
+
+            // Antennas
+            const antGeo3D = new THREE.CylinderGeometry(0.024, 0.024, 0.28, 8);
+            const antL = new THREE.Mesh(antGeo3D, darkMat);
+            antL.position.set(-0.28, 0.4, 0);
+            antL.rotation.z = Math.PI / 12;
+            remoteSub.add(antL);
+
+            const antR = new THREE.Mesh(antGeo3D, darkMat);
+            antR.position.set(0.28, 0.4, 0);
+            antR.rotation.z = -Math.PI / 12;
+            remoteSub.add(antR);
+
+            // Joysticks
+            const stickGeo3D = new THREE.CylinderGeometry(0.012, 0.012, 0.08, 8);
+            const stickTopGeo3D = new THREE.SphereGeometry(0.032, 8, 8);
+            
+            const stickL = new THREE.Mesh(stickGeo3D, metalMat);
+            stickL.position.set(-0.24, 0.16, 0.14);
+            stickL.rotation.x = Math.PI / 8;
+            remoteSub.add(stickL);
+            const stickTopL = new THREE.Mesh(stickTopGeo3D, stripeMat);
+            stickTopL.position.set(-0.24, 0.2, 0.16);
+            remoteSub.add(stickTopL);
+
+            const stickR = new THREE.Mesh(stickGeo3D, metalMat);
+            stickR.position.set(0.24, 0.16, 0.14);
+            stickR.rotation.x = -Math.PI / 10;
+            remoteSub.add(stickR);
+            const stickTopR = new THREE.Mesh(stickTopGeo3D, stripeMat);
+            stickTopR.position.set(0.24, 0.2, 0.13);
+            remoteSub.add(stickTopR);
+
+            remoteSub.rotation.x = -Math.PI / 8;
+            remoteSub.rotation.y = -Math.PI / 8;
+            remoteSub.scale.set(0.9, 0.9, 0.9);
+
+            // Projection Alignment function
+            function alignModelToBubble(modelGroup, bubbleElement, zPlane = 0) {
+                if (!bubbleElement) return;
+                const rect = bubbleElement.getBoundingClientRect();
+                const canvasRect = canvas.getBoundingClientRect();
+                
+                // NDC coordinates
+                const x = ((rect.left + rect.width / 2 - canvasRect.left) / canvasRect.width) * 2 - 1;
+                const y = -((rect.top + rect.height / 2 - canvasRect.top) / canvasRect.height) * 2 + 1;
+                
+                // Vector unprojection
+                const vector = new THREE.Vector3(x, y, 0.5);
+                vector.unproject(camera);
+                const dir = vector.sub(camera.position).normalize();
+                const distance = (zPlane - camera.position.z) / dir.z;
+                const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+                
+                modelGroup.position.copy(pos);
+            }
+
+            // Window Resize handler
+            window.addEventListener('resize', () => {
+                width = container.clientWidth;
+                height = container.clientHeight;
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+
+            // Animation Loop
+            let clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const time = clock.getElapsedTime();
+
+                // Dynamic projection alignment
+                alignModelToBubble(cameraGroup, document.getElementById('camera-bubble'), 0);
+                alignModelToBubble(gimbalGroup, document.getElementById('gimbal-bubble'), 0);
+                alignModelToBubble(droneGroup, document.getElementById('drone-bubble'), 0);
+                alignModelToBubble(remoteGroup, document.getElementById('remote-bubble'), 0);
+
+                // Individual hovers and local rotations
+                cameraSub.position.y = Math.sin(time * 1.3) * 0.12;
+                cameraSub.rotation.y = time * 0.22;
+
+                gimbalSub.position.y = Math.sin(time * 1.6 + 1.2) * 0.14;
+                gimbalSub.rotation.y = time * 0.20;
+                phoneGroup.rotation.z = Math.sin(time * 2.0) * 0.08;
+                phoneGroup.rotation.y = Math.cos(time * 1.5) * 0.05;
+
+                droneSub.position.y = Math.sin(time * 1.4) * 0.15;
+                droneSub.rotation.y = time * 0.24;
+                props.forEach((prop, idx) => {
+                    prop.rotation.y += (idx % 2 === 0 ? 0.95 : -0.95);
+                });
+
+                remoteSub.position.y = Math.sin(time * 1.8) * 0.11;
+                remoteSub.rotation.y = -Math.PI / 8 + Math.cos(time * 1.5) * 0.08;
+
+                // Mouse follow inertia
+                targetX = mouseX * 0.15;
+                targetY = mouseY * 0.15;
+                
+                const groups = [cameraGroup, gimbalGroup, droneGroup, remoteGroup];
+                groups.forEach(g => {
+                    g.rotation.x += (targetY - g.rotation.x) * 0.05;
+                    g.rotation.z += (targetX - g.rotation.z) * 0.05;
+                });
+
+                renderer.render(scene, camera);
+            }
+            animate();
+        });
+
+        // ==========================================
+        // Image Download Protection & Security
+        // ==========================================
+        
+        // Disable Right-Click context menu
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+
+        // Disable Image Dragging
+        document.querySelectorAll('img').forEach(img => {
+            img.setAttribute('draggable', 'false');
+            img.addEventListener('dragstart', (e) => e.preventDefault());
+        });
+
+        // Disable Key Shortcuts (Ctrl+S, Cmd+S, Ctrl+U, F12)
+        document.addEventListener('keydown', (e) => {
+            // F12 key
+            if (e.keyCode === 123) {
+                e.preventDefault();
+            }
+            // Ctrl+Shift+I or Cmd+Opt+I (DevTools)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+            }
+            // Ctrl+U or Cmd+Opt+U (View Source)
+            if ((e.ctrlKey || e.metaKey) && e.keyCode === 85) {
+                e.preventDefault();
+            }
+            // Ctrl+S or Cmd+S (Save Page)
+            if ((e.ctrlKey || e.metaKey) && e.keyCode === 83) {
+                e.preventDefault();
+            }
         });
     </script>
 </body>
