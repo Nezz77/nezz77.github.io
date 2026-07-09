@@ -720,6 +720,33 @@
             mouseY = (event.clientY - windowHalfY) / 100;
         });
 
+        function generateEnvMap() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            
+            // Rich studio lighting environment gradient
+            const grad = ctx.createLinearGradient(0, 0, 0, 256);
+            grad.addColorStop(0, '#ffffff'); // bright top light
+            grad.addColorStop(0.3, '#94a3b8'); // cool gray reflection
+            grad.addColorStop(0.5, '#0f172a'); // dark horizon
+            grad.addColorStop(0.7, '#1e293b'); // bottom fill
+            grad.addColorStop(1, '#020617');
+            
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 256, 256);
+            
+            // Add side highlights
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+            ctx.fillRect(30, 0, 35, 256);
+            ctx.fillRect(190, 0, 45, 256);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            return texture;
+        }
+
         // Initialize 3D Engine
         window.addEventListener('load', () => {
             const canvas = document.getElementById('hero-3d-canvas');
@@ -731,6 +758,9 @@
 
             const scene = new THREE.Scene();
             
+            // Enable environment reflection map globally
+            scene.environment = generateEnvMap();
+            
             const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
             camera.position.z = 7;
 
@@ -739,16 +769,20 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
             // Lights
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.60);
             scene.add(ambientLight);
 
-            const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.95);
+            const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.85);
             dirLight1.position.set(5, 5, 5);
             scene.add(dirLight1);
 
-            const dirLight2 = new THREE.DirectionalLight(0x06b6d4, 0.55); // Cyan glow light
+            const dirLight2 = new THREE.DirectionalLight(0x06b6d4, 0.50); // Cyan glow light
             dirLight2.position.set(-5, -5, 2);
             scene.add(dirLight2);
+
+            const rimLight = new THREE.DirectionalLight(0xffffff, 0.75); // Strong rim highlight for realism
+            rimLight.position.set(0, 8, -5);
+            scene.add(rimLight);
 
             // Create Group for each model for positioning and independent mouse tilt
             const cameraGroup = new THREE.Group();
@@ -767,14 +801,15 @@
             const cameraSub = new THREE.Group();
             cameraGroup.add(cameraSub);
 
-            const bodyMat = new THREE.MeshStandardMaterial({ color: 0x18181b, roughness: 0.6, metalness: 0.1 });
-            const gripMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.85 });
-            const lensMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.3, metalness: 0.8 });
-            const glassMat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, roughness: 0.05, metalness: 0.95, transparent: true, opacity: 0.8 });
-            const redDetailMat = new THREE.MeshStandardMaterial({ color: 0xdc2626, roughness: 0.4 });
-            const metalMat = new THREE.MeshStandardMaterial({ color: 0xd4d4d8, metalness: 0.8, roughness: 0.2 });
+            const bodyMat = new THREE.MeshPhysicalMaterial({ color: 0x18181b, roughness: 0.55, metalness: 0.15, clearcoat: 0.25, clearcoatRoughness: 0.3 });
+            const gripMat = new THREE.MeshPhysicalMaterial({ color: 0x09090b, roughness: 0.78, metalness: 0.08 });
+            const lensMat = new THREE.MeshPhysicalMaterial({ color: 0x0c0a09, roughness: 0.2, metalness: 0.85, clearcoat: 0.6 });
+            const glassMat = new THREE.MeshPhysicalMaterial({ color: 0x38bdf8, roughness: 0.02, metalness: 0.9, transparent: true, opacity: 0.35, transmission: 0.85, ior: 1.5 });
+            const redDetailMat = new THREE.MeshPhysicalMaterial({ color: 0xdc2626, roughness: 0.3, metalness: 0.4, clearcoat: 0.5 });
+            const metalMat = new THREE.MeshPhysicalMaterial({ color: 0xd4d4d8, metalness: 0.95, roughness: 0.15 });
             const screenMat = new THREE.MeshBasicMaterial({ color: 0x06b6d4 }); // Glowing cyan screen!
-            const flashGlassMat = new THREE.MeshStandardMaterial({ color: 0xfef08a, roughness: 0.1, metalness: 0.8, transparent: true, opacity: 0.8 });
+            const flashGlassMat = new THREE.MeshPhysicalMaterial({ color: 0xfef08a, roughness: 0.1, metalness: 0.7, transparent: true, opacity: 0.6, transmission: 0.5 });
+            const redLedMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
 
             // Camera Body
             const bodyGeo = new THREE.BoxGeometry(1.6, 1.05, 0.65);
@@ -807,45 +842,70 @@
             vf.position.set(0, 0.58, 0);
             cameraSub.add(vf);
 
+            // Viewfinder glass element on back
+            const vfGlassGeo = new THREE.PlaneGeometry(0.18, 0.11);
+            const vfGlass = new THREE.Mesh(vfGlassGeo, glassMat);
+            vfGlass.position.set(0, 0.58, -0.25);
+            vfGlass.rotation.y = Math.PI;
+            cameraSub.add(vfGlass);
+
             // Hot shoe metal plate
             const hotShoeGeo = new THREE.BoxGeometry(0.28, 0.03, 0.28);
             const hotShoe = new THREE.Mesh(hotShoeGeo, metalMat);
             hotShoe.position.set(0, 0.7, 0);
             cameraSub.add(hotShoe);
 
-            // Lens Barrel
-            const lensBarrelGeo = new THREE.CylinderGeometry(0.48, 0.48, 0.85, 32);
-            const lensBarrel = new THREE.Mesh(lensBarrelGeo, bodyMat);
-            lensBarrel.rotation.x = Math.PI / 2;
-            lensBarrel.position.set(0.16, -0.04, 0.6);
-            cameraSub.add(lensBarrel);
+            // Lens Barrel Base
+            const lensBaseGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.3, 32);
+            const lensBase = new THREE.Mesh(lensBaseGeo, bodyMat);
+            lensBase.rotation.x = Math.PI / 2;
+            lensBase.position.set(0.16, -0.04, 0.3);
+            cameraSub.add(lensBase);
 
-            // Focus Ring
-            const ringGeo = new THREE.CylinderGeometry(0.49, 0.49, 0.25, 32);
-            const ring = new THREE.Mesh(ringGeo, gripMat);
-            ring.rotation.x = Math.PI / 2;
-            ring.position.set(0.16, -0.04, 0.5);
-            cameraSub.add(ring);
+            // Focus Ring with ridges
+            const focusRingGroup = new THREE.Group();
+            focusRingGroup.position.set(0.16, -0.04, 0.5);
+            focusRingGroup.rotation.x = Math.PI / 2;
+            cameraSub.add(focusRingGroup);
+
+            const ringMain = new THREE.Mesh(new THREE.CylinderGeometry(0.49, 0.49, 0.2, 32), gripMat);
+            focusRingGroup.add(ringMain);
+            
+            const ridgeGeo = new THREE.BoxGeometry(0.012, 0.21, 0.012);
+            for (let i = 0; i < 16; i++) {
+                const ridge = new THREE.Mesh(ridgeGeo, bodyMat);
+                const angle = (i / 16) * Math.PI * 2;
+                ridge.position.set(Math.sin(angle) * 0.492, 0, Math.cos(angle) * 0.492);
+                ridge.rotation.y = -angle;
+                focusRingGroup.add(ridge);
+            }
+
+            // Lens glass front element
+            const lensFrontGeo = new THREE.CylinderGeometry(0.46, 0.46, 0.4, 32);
+            const lensFront = new THREE.Mesh(lensFrontGeo, bodyMat);
+            lensFront.rotation.x = Math.PI / 2;
+            lensFront.position.set(0.16, -0.04, 0.8);
+            cameraSub.add(lensFront);
 
             // Red Ring (L Series)
-            const redRingGeo = new THREE.TorusGeometry(0.48, 0.015, 12, 32);
+            const redRingGeo = new THREE.TorusGeometry(0.465, 0.012, 8, 32);
             const redRing = new THREE.Mesh(redRingGeo, redDetailMat);
-            redRing.position.set(0.16, -0.04, 0.9);
+            redRing.position.set(0.16, -0.04, 0.98);
             cameraSub.add(redRing);
 
             // Lens Hood
-            const hoodGeo = new THREE.CylinderGeometry(0.54, 0.48, 0.2, 32, 1, true);
+            const hoodGeo = new THREE.CylinderGeometry(0.53, 0.47, 0.15, 32, 1, true);
             const hood = new THREE.Mesh(hoodGeo, bodyMat);
             hood.rotation.x = Math.PI / 2;
-            hood.position.set(0.16, -0.04, 0.98);
+            hood.position.set(0.16, -0.04, 1.05);
             cameraSub.add(hood);
 
-            // Lens Glass
-            const lensGlassGeo = new THREE.CylinderGeometry(0.42, 0.42, 0.03, 32);
-            const lensGlass = new THREE.Mesh(lensGlassGeo, glassMat);
-            lensGlass.rotation.x = Math.PI / 2;
-            lensGlass.position.set(0.16, -0.04, 0.89);
-            cameraSub.add(lensGlass);
+            // Lens Glass Reflector
+            const glassGeo = new THREE.CylinderGeometry(0.43, 0.43, 0.02, 32);
+            const glass = new THREE.Mesh(glassGeo, glassMat);
+            glass.rotation.x = Math.PI / 2;
+            glass.position.set(0.16, -0.04, 0.97);
+            cameraSub.add(glass);
 
             // Shutter Button
             const shutterGeo = new THREE.CylinderGeometry(0.08, 0.08, 0.1, 16);
@@ -853,10 +913,15 @@
             shutter.position.set(-0.6, 0.55, 0.15);
             cameraSub.add(shutter);
 
-            // Mode Dial
+            // Mode Dial with silver trim
+            const dialTrimGeo = new THREE.CylinderGeometry(0.14, 0.14, 0.08, 20);
+            const dialTrim = new THREE.Mesh(dialTrimGeo, metalMat);
+            dialTrim.position.set(0.44, 0.54, 0.12);
+            cameraSub.add(dialTrim);
+
             const dialGeo = new THREE.CylinderGeometry(0.13, 0.13, 0.06, 20);
             const dial = new THREE.Mesh(dialGeo, bodyMat);
-            dial.position.set(0.44, 0.55, 0.12);
+            dial.position.set(0.44, 0.57, 0.12);
             cameraSub.add(dial);
 
             // Flash element
@@ -864,6 +929,12 @@
             const flash = new THREE.Mesh(flashGeo, flashGlassMat);
             flash.position.set(0, 0.54, 0.25);
             cameraSub.add(flash);
+
+            // Recording LED light detail on front body
+            const recordingLedGeo = new THREE.SphereGeometry(0.025, 8, 8);
+            const recordingLed = new THREE.Mesh(recordingLedGeo, redLedMat);
+            recordingLed.position.set(-0.4, 0.35, 0.33);
+            cameraSub.add(recordingLed);
 
             cameraSub.scale.set(0.9, 0.9, 0.9);
             cameraSub.rotation.y = -Math.PI / 6;
@@ -874,14 +945,17 @@
             const gimbalSub = new THREE.Group();
             gimbalGroup.add(gimbalSub);
 
+            const gimbalBodyMat = new THREE.MeshPhysicalMaterial({ color: 0x27272a, roughness: 0.45, metalness: 0.20, clearcoat: 0.15 });
+            const anodizedBlueMat = new THREE.MeshPhysicalMaterial({ color: 0x06b6d4, roughness: 0.1, metalness: 0.9 });
+
             // Handle
             const handleGeo = new THREE.CylinderGeometry(0.09, 0.09, 0.9, 16);
-            const handle = new THREE.Mesh(handleGeo, bodyMat);
+            const handle = new THREE.Mesh(handleGeo, gimbalBodyMat);
             gimbalSub.add(handle);
 
             // Control Base
             const baseGeo = new THREE.CylinderGeometry(0.12, 0.12, 0.2, 16);
-            const base = new THREE.Mesh(baseGeo, bodyMat);
+            const base = new THREE.Mesh(baseGeo, gimbalBodyMat);
             base.position.set(0, 0.35, 0.02);
             gimbalSub.add(base);
 
@@ -891,22 +965,51 @@
             joystick.position.set(0, 0.4, 0.14);
             gimbalSub.add(joystick);
 
+            // Mode indicator light (cyan)
+            const indicatorGeo = new THREE.SphereGeometry(0.015, 8, 8);
+            const indicator = new THREE.Mesh(indicatorGeo, screenMat);
+            indicator.position.set(0.06, 0.42, 0.11);
+            gimbalSub.add(indicator);
+
             // Gimbal Arm 1
             const arm1Geo = new THREE.BoxGeometry(0.06, 0.32, 0.06);
-            const arm1 = new THREE.Mesh(arm1Geo, bodyMat);
+            const arm1 = new THREE.Mesh(arm1Geo, gimbalBodyMat);
             arm1.position.set(0.06, 0.56, -0.04);
             arm1.rotation.z = Math.PI / 12;
             gimbalSub.add(arm1);
 
+            // Axis Pivot Motor 1
+            const pivot1Geo = new THREE.CylinderGeometry(0.07, 0.07, 0.08, 16);
+            const pivot1 = new THREE.Mesh(pivot1Geo, gimbalBodyMat);
+            pivot1.position.set(0.1, 0.7, -0.04);
+            pivot1.rotation.x = Math.PI / 2;
+            gimbalSub.add(pivot1);
+
+            const pivotCap1 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.01, 16), anodizedBlueMat);
+            pivotCap1.position.set(0.1, 0.7, 0.005);
+            pivotCap1.rotation.x = Math.PI / 2;
+            gimbalSub.add(pivotCap1);
+
             // Gimbal Arm 2
             const arm2Geo = new THREE.BoxGeometry(0.24, 0.06, 0.06);
-            const arm2 = new THREE.Mesh(arm2Geo, bodyMat);
+            const arm2 = new THREE.Mesh(arm2Geo, gimbalBodyMat);
             arm2.position.set(0.14, 0.7, 0);
             gimbalSub.add(arm2);
 
+            // Axis Pivot Motor 2
+            const pivot2Geo = new THREE.CylinderGeometry(0.07, 0.07, 0.08, 16);
+            const pivot2 = new THREE.Mesh(pivot2Geo, gimbalBodyMat);
+            pivot2.position.set(0.26, 0.7, 0.02);
+            gimbalSub.add(pivot2);
+
+            const pivotCap2 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.01, 16), anodizedBlueMat);
+            pivotCap2.position.set(0.26, 0.7, 0.065);
+            pivotCap2.rotation.x = Math.PI / 2;
+            gimbalSub.add(pivotCap2);
+
             // Smartphone Clamp
             const clampGeo = new THREE.BoxGeometry(0.08, 0.16, 0.24);
-            const clamp = new THREE.Mesh(clampGeo, bodyMat);
+            const clamp = new THREE.Mesh(clampGeo, gimbalBodyMat);
             clamp.position.set(0.26, 0.7, 0.06);
             gimbalSub.add(clamp);
 
@@ -914,10 +1017,41 @@
             const phoneGroup = new THREE.Group();
             phoneGroup.position.set(0.26, 0.7, 0.06);
             
+            const phoneMat = new THREE.MeshPhysicalMaterial({ color: 0x09090b, roughness: 0.25, metalness: 0.75, clearcoat: 0.8, clearcoatRoughness: 0.1 });
             const phoneGeo = new THREE.BoxGeometry(0.05, 1.05, 0.52);
-            const phoneMat = new THREE.MeshStandardMaterial({ color: 0x09090b, roughness: 0.3, metalness: 0.7 });
             const phone = new THREE.Mesh(phoneGeo, phoneMat);
             phoneGroup.add(phone);
+
+            // Smartphone Bezel Ring (Silver trim)
+            const bezelGeo = new THREE.BoxGeometry(0.054, 1.07, 0.54);
+            const bezel = new THREE.Mesh(bezelGeo, metalMat);
+            bezel.position.set(0, 0, 0);
+            phoneGroup.add(bezel);
+            bezel.scale.set(0.99, 0.99, 0.99);
+
+            // Triple camera module on the back of phone
+            const cameraModuleGeo = new THREE.BoxGeometry(0.015, 0.22, 0.16);
+            const cameraModule = new THREE.Mesh(cameraModuleGeo, gripMat);
+            cameraModule.position.set(-0.026, 0.32, -0.12);
+            phoneGroup.add(cameraModule);
+
+            const phoneLensGeo = new THREE.CylinderGeometry(0.022, 0.022, 0.01, 16);
+            const phoneLensMat = new THREE.MeshPhysicalMaterial({ color: 0x09090b, metalness: 0.95, roughness: 0.1 });
+            const phoneLensGlassMat = new THREE.MeshPhysicalMaterial({ color: 0x111, metalness: 0.9, roughness: 0.01, transparent: true, opacity: 0.85 });
+            
+            for (let i = 0; i < 3; i++) {
+                // Metallic ring
+                const pLens = new THREE.Mesh(phoneLensGeo, phoneLensMat);
+                pLens.rotation.z = Math.PI / 2;
+                pLens.position.set(-0.034, 0.38 - i * 0.065, -0.12);
+                phoneGroup.add(pLens);
+                
+                // Glass inner reflection
+                const pGlass = new THREE.Mesh(new THREE.CylinderGeometry(0.015, 0.015, 0.012, 16), phoneLensGlassMat);
+                pGlass.rotation.z = Math.PI / 2;
+                pGlass.position.set(-0.036, 0.38 - i * 0.065, -0.12);
+                phoneGroup.add(pGlass);
+            }
 
             // Glowing screen
             const phoneScreenGeo = new THREE.BoxGeometry(0.01, 1.0, 0.48);
@@ -935,12 +1069,13 @@
             const droneSub = new THREE.Group();
             droneGroup.add(droneSub);
 
-            const droneBodyMat = new THREE.MeshStandardMaterial({ color: 0x64748b, roughness: 0.4, metalness: 0.2 });
-            const darkMat = new THREE.MeshStandardMaterial({ color: 0x0f172a, roughness: 0.6 });
-            const propMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.9, transparent: true, opacity: 0.6 });
-            const stripeMat = new THREE.MeshStandardMaterial({ color: 0xea580c, roughness: 0.4 }); // Orange stripe
+            const droneBodyMat = new THREE.MeshPhysicalMaterial({ color: 0x475569, roughness: 0.32, metalness: 0.35, clearcoat: 0.4, clearcoatRoughness: 0.2 });
+            const darkMat = new THREE.MeshPhysicalMaterial({ color: 0x0f172a, roughness: 0.55, metalness: 0.1 });
+            const propMat = new THREE.MeshPhysicalMaterial({ color: 0x1e293b, roughness: 0.7, metalness: 0.8, transparent: true, opacity: 0.45 });
+            const stripeMat = new THREE.MeshPhysicalMaterial({ color: 0xea580c, roughness: 0.3, metalness: 0.3, clearcoat: 0.3 }); // Orange stripe
             const ledGreenMat = new THREE.MeshBasicMaterial({ color: 0x22c55e });
             const ledRedMat = new THREE.MeshBasicMaterial({ color: 0xef4444 });
+            const yellowTipMat = new THREE.MeshBasicMaterial({ color: 0xeab308 }); // Propeller yellow tip
 
             // Drone Body
             const bodyGeo3D = new THREE.BoxGeometry(0.4, 0.24, 1.05);
@@ -957,17 +1092,34 @@
             sensorR.position.set(0.13, 0.04, 0.53);
             droneSub.add(sensorR);
 
-            // Gimbal + Lens on front bottom
-            const gimbalGeo3D = new THREE.SphereGeometry(0.16, 16, 16);
+            // Gimbal Axis Mount Nose
+            const gMountGeo = new THREE.BoxGeometry(0.16, 0.12, 0.16);
+            const gMount = new THREE.Mesh(gMountGeo, darkMat);
+            gMount.position.set(0, -0.14, 0.42);
+            droneSub.add(gMount);
+
+            const gAxisGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.1, 12);
+            const gAxis = new THREE.Mesh(gAxisGeo, metalMat);
+            gAxis.position.set(0.07, -0.14, 0.42);
+            gAxis.rotation.z = Math.PI / 2;
+            droneSub.add(gAxis);
+
+            // Gimbal Camera + Lens
+            const gimbalGeo3D = new THREE.SphereGeometry(0.14, 16, 16);
             const gimbal3D = new THREE.Mesh(gimbalGeo3D, darkMat);
-            gimbal3D.position.set(0, -0.14, 0.44);
+            gimbal3D.position.set(0, -0.18, 0.48);
             droneSub.add(gimbal3D);
 
-            const lensGeo3D = new THREE.CylinderGeometry(0.05, 0.05, 0.1, 12);
+            const lensGeo3D = new THREE.CylinderGeometry(0.05, 0.05, 0.08, 12);
             const lens3D = new THREE.Mesh(lensGeo3D, darkMat);
             lens3D.rotation.x = Math.PI / 2;
-            lens3D.position.set(0, -0.14, 0.53);
+            lens3D.position.set(0, -0.18, 0.54);
             droneSub.add(lens3D);
+
+            const lensGlass3D = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.01, 12), glassMat);
+            lensGlass3D.rotation.x = Math.PI / 2;
+            lensGlass3D.position.set(0, -0.18, 0.575);
+            droneSub.add(lensGlass3D);
 
             // Four Arms
             const armGeo3D = new THREE.BoxGeometry(0.08, 0.05, 0.65);
@@ -1004,6 +1156,40 @@
             armBR.rotation.y = Math.PI / 4;
             droneSub.add(armBR);
 
+            // Arm joint hinges
+            const hingeGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.08, 12);
+            const hingeFL = new THREE.Mesh(hingeGeo, darkMat);
+            hingeFL.position.set(0.12, 0.06, 0.16);
+            droneSub.add(hingeFL);
+            const hingeFR = new THREE.Mesh(hingeGeo, darkMat);
+            hingeFR.position.set(-0.12, 0.06, 0.16);
+            droneSub.add(hingeFR);
+            const hingeBL = new THREE.Mesh(hingeGeo, darkMat);
+            hingeBL.position.set(0.12, 0.06, -0.16);
+            droneSub.add(hingeBL);
+            const hingeBR = new THREE.Mesh(hingeGeo, darkMat);
+            hingeBR.position.set(-0.12, 0.06, -0.16);
+            droneSub.add(hingeBR);
+
+            // Landing Legs on front arms
+            const legGeo = new THREE.BoxGeometry(0.04, 0.20, 0.04);
+            const legL = new THREE.Mesh(legGeo, droneBodyMat);
+            legL.position.set(0.48, -0.10, 0.55);
+            droneSub.add(legL);
+
+            const legR = new THREE.Mesh(legGeo, droneBodyMat);
+            legR.position.set(-0.48, -0.10, 0.55);
+            droneSub.add(legR);
+
+            // 4 battery LEDs on the back top
+            const batteryLedGeo = new THREE.BoxGeometry(0.015, 0.008, 0.04);
+            const batteryLedMat = new THREE.MeshBasicMaterial({ color: 0x22c55e });
+            for (let i = 0; i < 4; i++) {
+                const bLed = new THREE.Mesh(batteryLedGeo, batteryLedMat);
+                bLed.position.set(-0.075 + i * 0.05, 0.122, -0.22);
+                droneSub.add(bLed);
+            }
+
             // Motors & Nav Lights
             const motorGeo3D = new THREE.CylinderGeometry(0.08, 0.08, 0.1, 12);
             const motorPositions = [
@@ -1025,14 +1211,31 @@
                 droneSub.add(led);
             });
 
-            // Propellers
-            const propBladeGeo3D = new THREE.BoxGeometry(0.65, 0.004, 0.04);
+            // Realistic Propellers (Two blades with yellow tips)
             const props = [];
             motorPositions.forEach(pos => {
-                const prop = new THREE.Mesh(propBladeGeo3D, propMat);
-                prop.position.set(pos.x, pos.y + 0.06, pos.z);
-                droneSub.add(prop);
-                props.push(prop);
+                const propGroup = new THREE.Group();
+                propGroup.position.set(pos.x, pos.y + 0.06, pos.z);
+                droneSub.add(propGroup);
+
+                // Main hub
+                const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 0.02, 10), darkMat);
+                propGroup.add(hub);
+
+                // Blades
+                const propMain = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.004, 0.04), propMat);
+                propGroup.add(propMain);
+
+                // Add yellow stripes on tips
+                const tipL = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.005, 0.042), yellowTipMat);
+                tipL.position.set(0.3, 0, 0);
+                propGroup.add(tipL);
+
+                const tipR = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.005, 0.042), yellowTipMat);
+                tipR.position.set(-0.3, 0, 0);
+                propGroup.add(tipR);
+
+                props.push(propGroup);
             });
 
             droneSub.rotation.x = Math.PI / 12;
@@ -1049,14 +1252,36 @@
             const rcBody = new THREE.Mesh(rcBodyGeo, droneBodyMat);
             remoteSub.add(rcBody);
 
+            // Rubber side grips
+            const gripLGeo = new THREE.BoxGeometry(0.05, 0.54, 0.25);
+            const gripL = new THREE.Mesh(gripLGeo, gripMat);
+            gripL.position.set(-0.46, -0.03, 0.01);
+            remoteSub.add(gripL);
+
+            const gripR = new THREE.Mesh(gripLGeo, gripMat);
+            gripR.position.set(0.46, -0.03, 0.01);
+            remoteSub.add(gripR);
+
             // RC Screen
             const rcScreenGeo = new THREE.BoxGeometry(0.8, 0.36, 0.02);
-            const rcScreenMat = new THREE.MeshStandardMaterial({ color: 0x020617, roughness: 0.1, metalness: 0.9 });
+            const rcScreenMat = new THREE.MeshPhysicalMaterial({ color: 0x020617, roughness: 0.08, metalness: 0.9, transparent: true, opacity: 0.65, transmission: 0.5 });
             const rcScreen = new THREE.Mesh(rcScreenGeo, rcScreenMat);
             rcScreen.position.set(0, -0.04, 0.122);
             remoteSub.add(rcScreen);
 
-            // Antennas
+            // Joystick Bases
+            const stickBaseGeo = new THREE.CylinderGeometry(0.045, 0.06, 0.015, 16);
+            const stickBaseL = new THREE.Mesh(stickBaseGeo, darkMat);
+            stickBaseL.position.set(-0.24, 0.12, 0.13);
+            stickBaseL.rotation.x = Math.PI / 8;
+            remoteSub.add(stickBaseL);
+
+            const stickBaseR = new THREE.Mesh(stickBaseGeo, darkMat);
+            stickBaseR.position.set(0.24, 0.12, 0.13);
+            stickBaseR.rotation.x = -Math.PI / 10;
+            remoteSub.add(stickBaseR);
+
+            // Double jointed Antennas
             const antGeo3D = new THREE.CylinderGeometry(0.024, 0.024, 0.28, 8);
             const antL = new THREE.Mesh(antGeo3D, darkMat);
             antL.position.set(-0.28, 0.4, 0);
@@ -1087,6 +1312,12 @@
             const stickTopR = new THREE.Mesh(stickTopGeo3D, stripeMat);
             stickTopR.position.set(0.24, 0.2, 0.13);
             remoteSub.add(stickTopR);
+
+            // Power status LED
+            const powerLedGeo = new THREE.SphereGeometry(0.016, 8, 8);
+            const powerLed = new THREE.Mesh(powerLedGeo, ledGreenMat);
+            powerLed.position.set(-0.34, -0.2, 0.13);
+            remoteSub.add(powerLed);
 
             remoteSub.rotation.x = -Math.PI / 8;
             remoteSub.rotation.y = -Math.PI / 8;
