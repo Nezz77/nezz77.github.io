@@ -22,20 +22,6 @@
 </head>
 
 <body class="photography-page">
-    <!-- Onscreen Debug Console -->
-    <div id="debug-log"
-        style="position:fixed; bottom: 10px; left: 10px; color: #ff0000; background: rgba(0,0,0,0.85); z-index: 10000; font-family: monospace; font-size: 11px; max-height: 150px; overflow: auto; padding: 8px; border: 1.5px solid #ff0000; border-radius: 5px; display: none;">
-    </div>
-    <script>
-        window.onerror = function (msg, url, line) {
-            const debug = document.getElementById('debug-log');
-            if (debug) {
-                debug.style.display = 'block';
-                debug.innerHTML += `<div>Error: ${msg} (${line})</div>`;
-            }
-            return false;
-        };
-    </script>
     <!-- Background Elements -->
     <div class="bg-image-overlay"></div>
     <div class="glow-orbs">
