@@ -913,6 +913,10 @@ footer a:hover {
 /* ================================================
    EVENT ALBUM CARDS
    ================================================ */
+.gallery-item[data-category="events"] {
+    display: flex;
+}
+
 .event-album-card {
     backdrop-filter: var(--glass-blur);
     background: var(--card-bg);

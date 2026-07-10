@@ -514,7 +514,7 @@
                      ============================ -->
 
                 <!-- Album 1: FIT MOMENTS – Batch 25 Inauguration -->
-                <div class="col-12 col-lg-6 gallery-item d-flex" data-category="events">
+                <div class="col-12 col-lg-6 gallery-item" data-category="events">
                     <div class="event-album-card">
                         <div class="album-preview-grid">
                             <img src="events/1.jpeg" alt="FIT Moments Inauguration 1" class="preview-main" loading="lazy">
@@ -543,7 +543,7 @@
                 </div>
 
                 <!-- Album 2: MoraSevens Rugby – MoraSpirit360 -->
-                <div class="col-12 col-lg-6 gallery-item d-flex" data-category="events">
+                <div class="col-12 col-lg-6 gallery-item" data-category="events">
                     <div class="event-album-card">
                         <div class="album-preview-grid">
                             <img src="events/8.jpeg" alt="MoraSevens Rugby 1" class="preview-main" loading="lazy">
@@ -572,7 +572,7 @@
                 </div>
 
                 <!-- Album 3: SLUG × MoraSpirit Photography -->
-                <div class="col-12 col-lg-6 gallery-item d-flex" data-category="events">
+                <div class="col-12 col-lg-6 gallery-item" data-category="events">
                     <div class="event-album-card">
                         <div class="album-preview-grid grid-3">
                             <img src="events/15.jpeg" alt="SLUG MoraSpirit 1" class="preview-main" loading="lazy">
@@ -596,7 +596,7 @@
                 </div>
 
                 <!-- Album 4: Devthon 3.0 – Workshop -->
-                <div class="col-12 col-lg-6 gallery-item d-flex" data-category="events">
+                <div class="col-12 col-lg-6 gallery-item" data-category="events">
                     <div class="event-album-card">
                         <div class="album-preview-grid grid-2">
                             <img src="events/19.jpeg" alt="Devthon 3.0 Workshop 1" class="preview-main" loading="lazy">
@@ -619,7 +619,7 @@
                 </div>
 
                 <!-- Album 5: Devthon 3.0 – Competition -->
-                <div class="col-12 col-lg-6 gallery-item d-flex" data-category="events">
+                <div class="col-12 col-lg-6 gallery-item" data-category="events">
                     <div class="event-album-card">
                         <div class="album-preview-grid grid-1">
                             <img src="events/18.jpeg" alt="Devthon 3.0 Competition" class="preview-main" loading="lazy">
@@ -641,7 +641,7 @@
                 </div>
 
                 <!-- Album 6: ShuttleFest – ENTC Batch 24 -->
-                <div class="col-12 col-lg-6 gallery-item d-flex" data-category="events">
+                <div class="col-12 col-lg-6 gallery-item" data-category="events">
                     <div class="event-album-card">
                         <div class="album-preview-grid">
                             <img src="events/25.jpeg" alt="ShuttleFest 1" class="preview-main" loading="lazy">
@@ -798,8 +798,7 @@
             const items = document.querySelectorAll('.gallery-item');
             items.forEach(item => {
                 if (item.getAttribute('data-category') === category) {
-                    // Event cards use d-flex, nature cards use block
-                    item.style.display = item.classList.contains('d-flex') ? 'flex' : 'block';
+                    item.style.display = (category === 'events') ? 'flex' : 'block';
                 } else {
                     item.style.display = 'none';
                 }
