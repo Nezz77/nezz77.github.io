@@ -649,13 +649,21 @@
             document.body.classList.add('page-loaded');
         }, 1200);
 
-        // Register Service Worker for offline support & instant caching
+        // Register Service Worker for offline support & instant caching (except on localhost/development)
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('Service Worker registered:', reg.scope))
-                    .catch(err => console.error('Service Worker registration failed:', err));
-            });
+            if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                navigator.serviceWorker.getRegistrations().then(registrations => {
+                    for (let registration of registrations) {
+                        registration.unregister();
+                    }
+                });
+            } else {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./service-worker.js')
+                        .then(reg => console.log('Service Worker registered:', reg.scope))
+                        .catch(err => console.error('Service Worker registration failed:', err));
+                });
+            }
         }
     </script>
 </body>
