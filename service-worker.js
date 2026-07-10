@@ -11,7 +11,9 @@ const CORE_ASSETS = [
   './my4to.jpg',
   './my4to2.jpg',
   './moraspirit.png',
-  './fitmoments.png'
+  './fitmoments.png',
+  './sasnakasansada.png',
+  './appliedmaths.jpg'
 ];
 
 // Install Event - Pre-cache core assets
@@ -50,7 +52,7 @@ self.addEventListener('fetch', (event) => {
               cache.put(event.request, networkResponse);
             });
           }
-        }).catch(() => {/* Ignore network errors in background */});
+        }).catch(() => {/* Ignore network errors in background */ });
         return cachedResponse;
       }
 
@@ -59,11 +61,11 @@ self.addEventListener('fetch', (event) => {
         if (
           networkResponse &&
           networkResponse.status === 200 &&
-          (event.request.url.startsWith(self.location.origin) || 
-           event.request.url.includes('cdnjs.cloudflare.com') || 
-           event.request.url.includes('cdn.jsdelivr.net') ||
-           event.request.url.includes('fonts.googleapis.com') ||
-           event.request.url.includes('fonts.gstatic.com'))
+          (event.request.url.startsWith(self.location.origin) ||
+            event.request.url.includes('cdnjs.cloudflare.com') ||
+            event.request.url.includes('cdn.jsdelivr.net') ||
+            event.request.url.includes('fonts.googleapis.com') ||
+            event.request.url.includes('fonts.gstatic.com'))
         ) {
           const responseToCache = networkResponse.clone();
           caches.open(CACHE_NAME).then((cache) => {
