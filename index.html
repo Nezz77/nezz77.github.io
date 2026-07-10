@@ -613,6 +613,15 @@
                 }
             });
         }
+
+        // Smooth Page Load Initialization
+        window.addEventListener('load', () => {
+            document.body.classList.add('page-loaded');
+        });
+        // Fallback safety timeout (1.2 seconds max)
+        setTimeout(() => {
+            document.body.classList.add('page-loaded');
+        }, 1200);
     </script>
 </body>
 
