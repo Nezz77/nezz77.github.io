@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nh-portfolio-cache-v2';
+const CACHE_NAME = 'nh-portfolio-cache-v3';
 const CORE_ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,9 @@ const CORE_ASSETS = [
   './logos/fitmoments.png',
   './logos/sasnakasansada.png',
   './logos/appliedmaths.jpg',
+  './logos/moratuwa.png',
+  './logos/ijse.png',
+  './logos/richmond.png',
   './liquid-glass.js',
   // Event photography albums
   './events/1.jpeg',
