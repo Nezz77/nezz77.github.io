@@ -13,7 +13,8 @@ const CORE_ASSETS = [
   './logos/moraspirit.png',
   './logos/fitmoments.png',
   './logos/sasnakasansada.png',
-  './logos/appliedmaths.jpg'
+  './logos/appliedmaths.jpg',
+  './liquid-glass.js'
 ];
 
 // Install Event - Pre-cache core assets

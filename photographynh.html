@@ -635,7 +635,50 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Interactive Features Scripts -->
+    <script src="liquid-glass.js"></script>
     <script>
+        // Initialize Liquid Glass Refraction Effect
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof liquidGlass === 'function') {
+                // Apply to floating navbar
+                const nav = document.querySelector('.glass-nav');
+                if (nav) {
+                    liquidGlass(nav, {
+                        scale: -70,
+                        chroma: 3,
+                        border: 0.05,
+                        mapBlur: 8,
+                        blur: 15,
+                        saturate: 1.2
+                    });
+                }
+
+                // Apply to 3D bubbles for realistic glass sphere refraction
+                document.querySelectorAll('.glass-bubble').forEach(el => {
+                    liquidGlass(el, {
+                        scale: -140,     // Strong magnifying lens displacement
+                        chroma: 8,       // Accentuated chromatic prism fringe on lens border
+                        border: 0.05,    // Inset edge border
+                        mapBlur: 14,     // Curved dome bulge
+                        blur: 2,         // Low blur so background details refract sharply
+                        saturate: 1.3
+                    });
+                });
+
+                // Apply to photo cards in gallery
+                document.querySelectorAll('.photo-card').forEach(el => {
+                    liquidGlass(el, {
+                        scale: -45,
+                        chroma: 2,
+                        border: 0.04,
+                        mapBlur: 6,
+                        blur: 10,
+                        saturate: 1.15
+                    });
+                });
+            }
+        });
+
         // Mobile Menu Toggle
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const mobileDrawer = document.getElementById('mobileDrawer');
