@@ -4,16 +4,16 @@ const CORE_ASSETS = [
   './index.html',
   './photographynh.html',
   './style.css',
-  './nhlogo.png',
-  './nhlogo.ico',
-  './background.jpg',
-  './background2.jpg',
-  './my4to.jpg',
-  './my4to2.jpg',
-  './moraspirit.png',
-  './fitmoments.png',
-  './sasnakasansada.png',
-  './appliedmaths.jpg'
+  './logos/nhlogo.png',
+  './logos/nhlogo.ico',
+  './assets/background.jpg',
+  './assets/background2.jpg',
+  './assets/my4to.jpg',
+  './assets/my4to2.jpg',
+  './logos/moraspirit.png',
+  './logos/fitmoments.png',
+  './logos/sasnakasansada.png',
+  './logos/appliedmaths.jpg'
 ];
 
 // Install Event - Pre-cache core assets
