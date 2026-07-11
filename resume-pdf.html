@@ -1,28 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nesandu Hesitha — Resume</title>
   <link rel="icon" type="image/x-icon" href="logos/nhlogo.ico">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    a { color: inherit; text-decoration: none; }
-    :root {
-      --accent:       #6366f1;
-      --accent2:      #06b6d4;
-      --sidebar-bg:   #0f1117;
-      --main-bg:      #ffffff;
-      --sidebar-text: #e2e8f0;
-      --sidebar-muted:#94a3b8;
-      --main-text:    #0f172a;
-      --main-muted:   #475569;
-      --border:       #e2e8f0;
-      --tag-bg:       #f1f5f9;
-      --tag-text:     #334155;
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    :root {
+      --accent: #6366f1;
+      --accent2: #06b6d4;
+      --sidebar-bg: #0f1117;
+      --main-bg: #ffffff;
+      --sidebar-text: #e2e8f0;
+      --sidebar-muted: #94a3b8;
+      --main-text: #0f172a;
+      --main-muted: #475569;
+      --border: #e2e8f0;
+      --tag-bg: #f1f5f9;
+      --tag-text: #334155;
+    }
+
     body {
       font-family: 'Inter', sans-serif;
       background: #1a1a2e;
@@ -33,43 +48,66 @@
       padding: 30px 16px 60px;
       gap: 16px;
     }
+
     .controls {
       display: flex;
       gap: 12px;
       align-items: center;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 14px;
       padding: 12px 20px;
     }
-    .controls span { color: #94a3b8; font-size: 0.85rem; }
+
+    .controls span {
+      color: #94a3b8;
+      font-size: 0.85rem;
+    }
+
     .btn-print {
-      display: inline-flex; align-items: center; gap: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       background: linear-gradient(135deg, #6366f1, #06b6d4);
-      color: #fff; border: none; border-radius: 10px;
-      padding: 10px 22px; font-size: 0.9rem; font-weight: 600; cursor: pointer;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 22px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
     }
+
     .btn-back {
-      display: inline-flex; align-items: center; gap: 6px;
-      color: #94a3b8; font-size: 0.85rem;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px; padding: 8px 16px; text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #94a3b8;
+      font-size: 0.85rem;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 8px 16px;
+      text-decoration: none;
     }
+
     /* Paper sheets — fake-column gradient ensures dark sidebar fills 100% height in both screen & print */
-    .paper, .page2-paper {
+    .paper,
+    .page2-paper {
       width: 210mm;
       min-height: 297mm;
       /* Dark left column + white right column, always full height regardless of content */
       background: linear-gradient(to right, #0f1117 68mm, #ffffff 68mm);
       border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
       display: grid;
       grid-template-columns: 68mm 1fr;
       align-items: start;
     }
+
     /* Sidebar — background is handled by the paper gradient above, sidebar is transparent */
-    .sidebar, .page2-sidebar {
+    .sidebar,
+    .page2-sidebar {
       background: transparent;
       color: var(--sidebar-text);
       padding: 28px 20px;
@@ -78,73 +116,353 @@
       flex-direction: column;
       gap: 20px;
     }
-    .profile-block { text-align: center; }
+
+    .profile-block {
+      text-align: center;
+    }
+
     .avatar-wrap {
-      width: 92px; height: 92px; border-radius: 50%;
-      border: 3px solid var(--accent); overflow: hidden;
+      width: 92px;
+      height: 92px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      overflow: hidden;
       margin: 0 auto 10px;
-      box-shadow: 0 0 0 4px rgba(99,102,241,0.2);
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
     }
-    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; }
-    .s-name { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
-    .s-title { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent2); margin-top: 4px; }
-    .s-section { display: flex; flex-direction: column; gap: 8px; }
+
+    .avatar-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .s-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .s-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-top: 4px;
+    }
+
+    .s-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
     .s-heading {
-      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); border-bottom: 1px solid rgba(99,102,241,0.25); padding-bottom: 4px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.25);
+      padding-bottom: 4px;
     }
-    .contact-item { display: flex; align-items: flex-start; gap: 7px; font-size: 0.72rem; color: var(--sidebar-muted); line-height: 1.5; }
-    .contact-item i { color: var(--accent); margin-top: 2px; flex-shrink: 0; }
-    .contact-item a { color: var(--sidebar-muted); }
-    .edu-item { display: flex; flex-direction: column; gap: 1px; margin-bottom: 8px; }
-    .edu-deg { font-size: 0.76rem; font-weight: 600; color: #e2e8f0; }
-    .edu-inst { font-size: 0.68rem; color: var(--accent2); }
-    .edu-date { font-size: 0.64rem; color: var(--sidebar-muted); }
-    .edu-desc { font-size: 0.65rem; color: var(--sidebar-muted); margin-top: 2px; line-height: 1.4; }
-    .skill-grp { display: flex; flex-direction: column; gap: 4px; margin-bottom: 6px; }
-    .skill-grp-label { font-size: 0.64rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--sidebar-muted); }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; }
-    .s-tag { font-size: 0.62rem; background: rgba(99,102,241,0.15); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.25); border-radius: 4px; padding: 2px 6px; }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 7px;
+      font-size: 0.72rem;
+      color: var(--sidebar-muted);
+      line-height: 1.5;
+    }
+
+    .contact-item i {
+      color: var(--accent);
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+
+    .contact-item a {
+      color: var(--sidebar-muted);
+    }
+
+    .edu-item {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-bottom: 8px;
+    }
+
+    .edu-deg {
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .edu-inst {
+      font-size: 0.68rem;
+      color: var(--accent2);
+    }
+
+    .edu-date {
+      font-size: 0.64rem;
+      color: var(--sidebar-muted);
+    }
+
+    .edu-desc {
+      font-size: 0.65rem;
+      color: var(--sidebar-muted);
+      margin-top: 2px;
+      line-height: 1.4;
+    }
+
+    .skill-grp {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .skill-grp-label {
+      font-size: 0.64rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--sidebar-muted);
+    }
+
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .s-tag {
+      font-size: 0.62rem;
+      background: rgba(99, 102, 241, 0.15);
+      color: #a5b4fc;
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 4px;
+      padding: 2px 6px;
+    }
+
     /* Main area */
-    .main { padding: 26px 24px; display: flex; flex-direction: column; gap: 18px; }
-    .m-section { display: flex; flex-direction: column; gap: 9px; }
-    .m-heading {
-      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); border-bottom: 2px solid var(--accent); padding-bottom: 4px;
-      display: flex; align-items: center; gap: 6px;
+    .main {
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
     }
-    .summary-text { font-size: 0.78rem; color: var(--main-muted); line-height: 1.65; }
-    .timeline { display: flex; flex-direction: column; gap: 12px; }
-    .tl-item { display: flex; flex-direction: column; gap: 3px; }
-    .tl-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .tl-title { font-size: 0.81rem; font-weight: 600; color: var(--main-text); }
-    .tl-company { font-size: 0.71rem; color: var(--accent); font-weight: 500; }
-    .tl-date { font-size: 0.65rem; font-weight: 600; color: var(--main-muted); white-space: nowrap; background: var(--tag-bg); border-radius: 4px; padding: 2px 7px; flex-shrink: 0; }
-    .tl-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 3px; }
-    .tl-list li { font-size: 0.72rem; color: var(--main-muted); line-height: 1.5; padding-left: 11px; position: relative; }
-    .tl-list li::before { content: "›"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+    .m-section {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .m-heading {
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .summary-text {
+      font-size: 0.78rem;
+      color: var(--main-muted);
+      line-height: 1.65;
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .tl-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .tl-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .tl-title {
+      font-size: 0.81rem;
+      font-weight: 600;
+      color: var(--main-text);
+    }
+
+    .tl-company {
+      font-size: 0.71rem;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .tl-date {
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--main-muted);
+      white-space: nowrap;
+      background: var(--tag-bg);
+      border-radius: 4px;
+      padding: 2px 7px;
+      flex-shrink: 0;
+    }
+
+    .tl-list {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .tl-list li {
+      font-size: 0.72rem;
+      color: var(--main-muted);
+      line-height: 1.5;
+      padding-left: 11px;
+      position: relative;
+    }
+
+    .tl-list li::before {
+      content: "›";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
     /* Projects */
-    .projects-list { display: flex; flex-direction: column; gap: 11px; }
-    .proj-item { border: 1px solid var(--border); border-radius: 8px; padding: 11px 13px; display: flex; flex-direction: column; gap: 6px; }
-    .proj-item.featured { border-color: rgba(99,102,241,0.35); background: rgba(99,102,241,0.03); }
-    .proj-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .proj-name { font-size: 0.81rem; font-weight: 700; color: var(--main-text); display: flex; align-items: center; gap: 5px; }
-    .proj-name i { color: var(--accent); }
-    .proj-links-inline { display: flex; gap: 5px; flex-shrink: 0; }
-    .proj-link { display: inline-flex; align-items: center; gap: 3px; font-size: 0.65rem; font-weight: 600; color: var(--accent); border: 1px solid rgba(99,102,241,0.3); border-radius: 5px; padding: 2px 7px; }
-    .proj-desc { font-size: 0.72rem; color: var(--main-muted); line-height: 1.55; }
-    .proj-tags { display: flex; flex-wrap: wrap; gap: 3px; }
-    .proj-tag { font-size: 0.62rem; background: var(--tag-bg); color: var(--tag-text); border-radius: 4px; padding: 2px 7px; }
+    .projects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .proj-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .proj-item.featured {
+      border-color: rgba(99, 102, 241, 0.35);
+      background: rgba(99, 102, 241, 0.03);
+    }
+
+    .proj-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .proj-name {
+      font-size: 0.81rem;
+      font-weight: 700;
+      color: var(--main-text);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .proj-name i {
+      color: var(--accent);
+    }
+
+    .proj-links-inline {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .proj-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      color: var(--accent);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 5px;
+      padding: 2px 7px;
+    }
+
+    .proj-desc {
+      font-size: 0.72rem;
+      color: var(--main-muted);
+      line-height: 1.55;
+    }
+
+    .proj-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3px;
+    }
+
+    .proj-tag {
+      font-size: 0.62rem;
+      background: var(--tag-bg);
+      color: var(--tag-text);
+      border-radius: 4px;
+      padding: 2px 7px;
+    }
+
     /* Interests & langs sidebar p2 */
-    .interest-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
-    .interest-list li { font-size: 0.72rem; color: var(--sidebar-muted); display: flex; align-items: center; gap: 7px; }
-    .interest-list li i { color: var(--accent); }
-    .lang-item { font-size: 0.72rem; color: #e2e8f0; margin-bottom: 4px; }
-    .lang-item span { color: var(--sidebar-muted); font-size: 0.65rem; }
+    .interest-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .interest-list li {
+      font-size: 0.72rem;
+      color: var(--sidebar-muted);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .interest-list li i {
+      color: var(--accent);
+    }
+
+    .lang-item {
+      font-size: 0.72rem;
+      color: #e2e8f0;
+      margin-bottom: 4px;
+    }
+
+    .lang-item span {
+      color: var(--sidebar-muted);
+      font-size: 0.65rem;
+    }
 
     /* ── PRINT ─────────────────────────────────────── */
     @media print {
-      @page { size: A4; margin: 0; }
+      @page {
+        size: A4;
+        margin: 0;
+      }
 
       /* Force ALL background colors & images to print — works even without "Background graphics" checked */
       * {
@@ -153,35 +471,60 @@
         forced-color-adjust: none !important;
       }
 
-      body { background: #fff !important; padding: 0 !important; display: block !important; }
-      .controls { display: none !important; }
+      body {
+        background: #fff !important;
+        padding: 0 !important;
+        display: block !important;
+      }
+
+      .controls {
+        display: none !important;
+      }
 
       .paper {
-        width: 210mm !important; min-height: 297mm !important;
-        border-radius: 0 !important; box-shadow: none !important;
-        page-break-after: always; break-after: page;
+        width: 210mm !important;
+        min-height: 297mm !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        page-break-after: always;
+        break-after: page;
       }
+
       .page2-paper {
-        width: 210mm !important; min-height: 297mm !important;
-        border-radius: 0 !important; box-shadow: none !important;
+        width: 210mm !important;
+        min-height: 297mm !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
       }
 
       /* Explicitly reinforce sidebar dark background */
-      .sidebar, .page2-sidebar {
+      .sidebar,
+      .page2-sidebar {
         background: transparent !important;
         background-color: transparent !important;
       }
 
       /* Reinforce fake-column gradient so dark left stripe always prints */
-      .paper, .page2-paper {
+      .paper,
+      .page2-paper {
         background: linear-gradient(to right, #0f1117 68mm, #ffffff 68mm) !important;
       }
 
-      .tl-item, .proj-item, .edu-item, .skill-grp { break-inside: avoid; page-break-inside: avoid; }
-      a { color: inherit !important; }
+      .tl-item,
+      .proj-item,
+      .edu-item,
+      .skill-grp {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+
+      a {
+        color: inherit !important;
+      }
     }
   </style>
 </head>
+
 <body>
 
   <div class="controls">
@@ -203,12 +546,20 @@
 
       <div class="s-section">
         <div class="s-heading">Contact</div>
-        <div class="contact-item"><i class="bi bi-telephone-fill"></i><div><a href="tel:+94777940340">+94 77 794 0340</a><br><a href="tel:+94722379560">+94 72 237 9560</a></div></div>
-        <div class="contact-item"><i class="bi bi-envelope-fill"></i><div><a href="mailto:nesanduhm@gmail.com">nesanduhm@gmail.com</a><br><a href="mailto:nesanduhm@icloud.com">nesanduhm@icloud.com</a></div></div>
+        <div class="contact-item"><i class="bi bi-telephone-fill"></i>
+          <div><a href="tel:+94777940340">+94 72 237 9560</a><br><a href="tel:+94722379560">+94 77 794 0340</a></div>
+        </div>
+        <div class="contact-item"><i class="bi bi-envelope-fill"></i>
+          <div><a href="mailto:nesanduhm@gmail.com">nesanduhm@gmail.com</a><br><a
+              href="mailto:nesanduhm@icloud.com">nesanduhm@icloud.com</a></div>
+        </div>
         <div class="contact-item"><i class="bi bi-geo-alt-fill"></i><span>Galle, Sri Lanka</span></div>
-        <div class="contact-item"><i class="bi bi-linkedin"></i><a href="https://linkedin.com/in/nezz77/" target="_blank">linkedin.com/in/nezz77</a></div>
-        <div class="contact-item"><i class="bi bi-github"></i><a href="https://github.com/Nezz77" target="_blank">github.com/Nezz77</a></div>
-        <div class="contact-item"><i class="bi bi-globe"></i><a href="https://nezz77.github.io" target="_blank">nezz77.github.io</a></div>
+        <div class="contact-item"><i class="bi bi-linkedin"></i><a href="https://linkedin.com/in/nezz77/"
+            target="_blank">linkedin.com/in/nezz77</a></div>
+        <div class="contact-item"><i class="bi bi-github"></i><a href="https://github.com/Nezz77"
+            target="_blank">github.com/Nezz77</a></div>
+        <div class="contact-item"><i class="bi bi-globe"></i><a href="https://nezz77.github.io"
+            target="_blank">nezz77.github.io</a></div>
       </div>
 
       <div class="s-section">
@@ -274,8 +625,10 @@
         <div class="m-heading"><i class="bi bi-chat-right-quote-fill"></i> Professional Summary</div>
         <p class="summary-text">
           A passionate IT undergraduate skilled in web development, software engineering, and creative media production.
-          Experienced in building full-stack applications with Java and Python, production-level video editing, digital design,
-          drone videography, and professional photography. Highly motivated to solve real-world problems using modern software
+          Experienced in building full-stack applications with Java and Python, production-level video editing, digital
+          design,
+          drone videography, and professional photography. Highly motivated to solve real-world problems using modern
+          software
           technologies. Always seeking opportunities to grow, collaborate, and contribute skills effectively.
         </p>
       </div>
@@ -322,7 +675,10 @@
 
           <div class="tl-item">
             <div class="tl-header">
-              <div><div class="tl-title">Official Photographer / Media Editor</div><div class="tl-company">MoraSpirit &middot; Self-employed</div></div>
+              <div>
+                <div class="tl-title">Official Photographer / Media Editor</div>
+                <div class="tl-company">MoraSpirit &middot; Self-employed</div>
+              </div>
               <span class="tl-date">Feb 2025 &ndash; Present</span>
             </div>
             <ul class="tl-list">
@@ -334,7 +690,10 @@
 
           <div class="tl-item">
             <div class="tl-header">
-              <div><div class="tl-title">Official Photographer</div><div class="tl-company">FIT Moments &middot; ITFSU Students&apos; Union</div></div>
+              <div>
+                <div class="tl-title">Official Photographer</div>
+                <div class="tl-company">FIT Moments &middot; ITFSU Students&apos; Union</div>
+              </div>
               <span class="tl-date">Jan 2026 &ndash; Present</span>
             </div>
             <ul class="tl-list">
@@ -346,24 +705,16 @@
 
           <div class="tl-item">
             <div class="tl-header">
-              <div><div class="tl-title">Volunteering &amp; Mentorship</div><div class="tl-company">Sasnaka Sansada Foundation</div></div>
+              <div>
+                <div class="tl-title">Volunteering &amp; Mentorship</div>
+                <div class="tl-company">Sasnaka Sansada Foundation</div>
+              </div>
               <span class="tl-date">Active Volunteer</span>
             </div>
             <ul class="tl-list">
               <li>Contributed to charitable community outreach programs and educational development.</li>
               <li>Assisted high school students through mentorship seminars and mathematics guidance.</li>
               <li>Collaborated in planning and organizing large-scale NGO operations and events.</li>
-            </ul>
-          </div>
-
-          <div class="tl-item">
-            <div class="tl-header">
-              <div><div class="tl-title">Paper Marking Panelist</div><div class="tl-company">Applied Mathematics Division</div></div>
-              <span class="tl-date">2024 Mid &ndash; 2025</span>
-            </div>
-            <ul class="tl-list">
-              <li>Evaluated and marked examination papers with accuracy, fairness, and academic compliance.</li>
-              <li>Provided detailed constructive feedback; upheld grading standards alongside senior panelists.</li>
             </ul>
           </div>
 
@@ -382,6 +733,20 @@
             </ul>
           </div>
 
+          <div class="tl-item">
+            <div class="tl-header">
+              <div>
+                <div class="tl-title">Paper Marking Panelist</div>
+                <div class="tl-company">Applied Mathematics Division</div>
+              </div>
+              <span class="tl-date">2024 Mid &ndash; 2025</span>
+            </div>
+            <ul class="tl-list">
+              <li>Evaluated and marked examination papers with accuracy, fairness, and academic compliance.</li>
+              <li>Provided detailed constructive feedback; upheld grading standards alongside senior panelists.</li>
+            </ul>
+          </div>
+
         </div>
       </div>
     </div>
@@ -392,9 +757,15 @@
     <aside class="page2-sidebar">
       <div class="s-heading" style="color:#6366f1;border-bottom-color:rgba(99,102,241,0.25);">Nesandu Hesitha</div>
       <div style="font-size:0.7rem;color:#94a3b8;line-height:1.7;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;"><i class="bi bi-github" style="color:#6366f1;"></i><a href="https://github.com/Nezz77" target="_blank" style="color:#94a3b8;">github.com/Nezz77</a></div>
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;"><i class="bi bi-globe" style="color:#06b6d4;"></i><a href="https://nezz77.github.io" target="_blank" style="color:#94a3b8;">nezz77.github.io</a></div>
-        <div style="display:flex;align-items:center;gap:6px;"><i class="bi bi-envelope-fill" style="color:#6366f1;"></i><a href="mailto:nesanduhm@gmail.com" style="color:#94a3b8;">nesanduhm@gmail.com</a></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;"><i class="bi bi-github"
+            style="color:#6366f1;"></i><a href="https://github.com/Nezz77" target="_blank"
+            style="color:#94a3b8;">github.com/Nezz77</a></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:5px;"><i class="bi bi-globe"
+            style="color:#06b6d4;"></i><a href="https://nezz77.github.io" target="_blank"
+            style="color:#94a3b8;">nezz77.github.io</a></div>
+        <div style="display:flex;align-items:center;gap:6px;"><i class="bi bi-envelope-fill"
+            style="color:#6366f1;"></i><a href="mailto:nesanduhm@gmail.com"
+            style="color:#94a3b8;">nesanduhm@gmail.com</a></div>
       </div>
 
       <div class="s-section">
@@ -424,58 +795,106 @@
             <div class="proj-header">
               <div class="proj-name"><i class="bi bi-cpu-fill"></i> Hologram Fan Array (Fusion5)</div>
               <div class="proj-links-inline">
-                <a href="https://github.com/Nezz77/hologram" target="_blank" class="proj-link"><i class="bi bi-github"></i> Controller</a>
-                <a href="https://github.com/Nezz77/hologram_fan_software_Overlap" target="_blank" class="proj-link"><i class="bi bi-github"></i> App</a>
+                <a href="https://github.com/Nezz77/hologram" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Controller</a>
+                <a href="https://github.com/Nezz77/hologram_fan_software_Overlap" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> App</a>
               </div>
             </div>
-            <p class="proj-desc">Developed the <strong>first-ever hologram built in Sri Lanka</strong> with a vertical overlapping mechanism. Drives dual ESP32-S3 controllers for POV LED rendering, polls ultrasonic safety shields, and broadcasts real-time statistics over WebSockets.</p>
-            <div class="proj-tags"><span class="proj-tag">ESP32-S3</span><span class="proj-tag">Arduino C++</span><span class="proj-tag">FastLED</span><span class="proj-tag">WebSockets</span><span class="proj-tag">Hardware</span></div>
+            <p class="proj-desc">Developed the <strong>first-ever hologram built in Sri Lanka</strong> with a vertical
+              overlapping mechanism. Drives dual ESP32-S3 controllers for POV LED rendering, polls ultrasonic safety
+              shields, and broadcasts real-time statistics over WebSockets.</p>
+            <div class="proj-tags"><span class="proj-tag">ESP32-S3</span><span class="proj-tag">Arduino C++</span><span
+                class="proj-tag">FastLED</span><span class="proj-tag">WebSockets</span><span
+                class="proj-tag">Hardware</span></div>
           </div>
 
           <div class="proj-item">
             <div class="proj-header">
               <div class="proj-name"><i class="bi bi-search"></i> Lost &amp; Found System</div>
               <div class="proj-links-inline">
-                <a href="https://github.com/Nezz77/Lost-FoundSystem" target="_blank" class="proj-link"><i class="bi bi-github"></i> Backend</a>
-                <a href="https://github.com/Nezz77/Lost-FoundSystem_Frontend" target="_blank" class="proj-link"><i class="bi bi-github"></i> Frontend</a>
+                <a href="https://github.com/Nezz77/Lost-FoundSystem" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Backend</a>
+                <a href="https://github.com/Nezz77/Lost-FoundSystem_Frontend" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Frontend</a>
               </div>
             </div>
-            <p class="proj-desc">Full-stack web app for campus lost item reporting &amp; recovery. Spring Security JWT auth, MySQL database, and React TypeScript UI.</p>
-            <div class="proj-tags"><span class="proj-tag">React (TS)</span><span class="proj-tag">Spring Boot</span><span class="proj-tag">MySQL</span><span class="proj-tag">JWT Auth</span></div>
+            <p class="proj-desc">Full-stack web app for campus lost item reporting &amp; recovery. Spring Security JWT
+              auth, MySQL database, and React TypeScript UI.</p>
+            <div class="proj-tags"><span class="proj-tag">React (TS)</span><span class="proj-tag">Spring
+                Boot</span><span class="proj-tag">MySQL</span><span class="proj-tag">JWT Auth</span></div>
           </div>
 
           <div class="proj-item">
             <div class="proj-header">
               <div class="proj-name"><i class="bi bi-brush"></i> airDraw Canvas</div>
               <div class="proj-links-inline">
-                <a href="https://github.com/Nezz77/airDraw" target="_blank" class="proj-link"><i class="bi bi-github"></i> Repository</a>
+                <a href="https://github.com/Nezz77/airDraw" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Repository</a>
               </div>
             </div>
-            <p class="proj-desc">Computer vision air-writing application tracking hand gestures via webcam to draw on a virtual canvas in real-time using OpenCV and MediaPipe.</p>
-            <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">OpenCV</span><span class="proj-tag">MediaPipe</span></div>
+            <p class="proj-desc">Computer vision air-writing application tracking hand gestures via webcam to draw on a
+              virtual canvas in real-time using OpenCV and MediaPipe.</p>
+            <div class="proj-tags"><span class="proj-tag">Python</span><span class="proj-tag">OpenCV</span><span
+                class="proj-tag">MediaPipe</span></div>
           </div>
 
           <div class="proj-item">
             <div class="proj-header">
-              <div class="proj-name"><i class="bi bi-card-checklist"></i> Course Registrar</div>
+              <div class="proj-name"><i class="bi bi-card-checklist"></i> Course Registration System</div>
               <div class="proj-links-inline">
-                <a href="https://github.com/Nezz77/CRS_PROJECT" target="_blank" class="proj-link"><i class="bi bi-github"></i> Repository</a>
+                <a href="https://github.com/Nezz77/CRS_PROJECT" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Repository</a>
               </div>
             </div>
-            <p class="proj-desc">Desktop course registration app with rich JavaFX GUI backed by a relational MySQL database, applying OOP and layered architecture patterns.</p>
-            <div class="proj-tags"><span class="proj-tag">JavaFX</span><span class="proj-tag">Java OOP</span><span class="proj-tag">MySQL</span></div>
+            <p class="proj-desc">Desktop course registration app with rich JavaFX GUI backed by a relational MySQL
+              database, applying OOP and layered architecture patterns.</p>
+            <div class="proj-tags"><span class="proj-tag">JavaFX</span><span class="proj-tag">Java OOP</span><span
+                class="proj-tag">MySQL</span></div>
           </div>
 
           <div class="proj-item">
             <div class="proj-header">
               <div class="proj-name"><i class="bi bi-cart3"></i> FutureTech Shop</div>
               <div class="proj-links-inline">
-                <a href="https://github.com/Nezz77/FutureTech" target="_blank" class="proj-link"><i class="bi bi-github"></i> Repo</a>
-                <a href="https://nezz77.github.io/FutureTech/" target="_blank" class="proj-link"><i class="bi bi-globe"></i> Live</a>
+                <a href="https://github.com/Nezz77/FutureTech" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Repo</a>
+                <a href="https://nezz77.github.io/FutureTech/" target="_blank" class="proj-link"><i
+                    class="bi bi-globe"></i> Live</a>
               </div>
             </div>
-            <p class="proj-desc">Responsive online tech shop landing page with smooth animations, modern UI design, and live deployment on GitHub Pages.</p>
-            <div class="proj-tags"><span class="proj-tag">HTML5</span><span class="proj-tag">CSS3</span><span class="proj-tag">JavaScript</span></div>
+            <p class="proj-desc">Responsive online tech shop landing page with smooth animations, modern UI design, and
+              live deployment on GitHub Pages.</p>
+            <div class="proj-tags"><span class="proj-tag">HTML5</span><span class="proj-tag">CSS3</span><span
+                class="proj-tag">JavaScript</span></div>
+          </div>
+
+          <div class="proj-item">
+            <div class="proj-header">
+              <div class="proj-name"><i class="bi bi-house-door-fill"></i> Boarding Place Finder</div>
+              <div class="proj-links-inline">
+                <a href="https://github.com/Nezz77/Boarding_place" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> View Repo</a>
+              </div>
+            </div>
+            <p class="proj-desc">A web application designed to help university students and tenants search for and locate suitable boarding places. Features clean user forms and interactive layout.</p>
+            <div class="proj-tags"><span class="proj-tag">JavaScript</span><span class="proj-tag">HTML5</span><span
+                class="proj-tag">CSS3</span></div>
+          </div>
+
+          <div class="proj-item">
+            <div class="proj-header">
+              <div class="proj-name"><i class="bi bi-globe"></i> Personal Portfolio &amp; Resume Hub</div>
+              <div class="proj-links-inline">
+                <a href="https://github.com/Nezz77/nezz77.github.io" target="_blank" class="proj-link"><i
+                    class="bi bi-github"></i> Repo</a>
+                <a href="https://nezz77.github.io" target="_blank" class="proj-link"><i
+                    class="bi bi-globe"></i> Live</a>
+              </div>
+            </div>
+            <p class="proj-desc">Designed and developed a premium interactive personal portfolio website featuring modern liquid glass design, smooth dark/light mode transitions, and print-optimized PDF generation.</p>
+            <div class="proj-tags"><span class="proj-tag">HTML5</span><span class="proj-tag">CSS3</span><span
+                class="proj-tag">JavaScript</span><span class="proj-tag">Liquid Glass</span></div>
           </div>
 
         </div>
@@ -484,4 +903,5 @@
   </div><!-- /PAGE 2 -->
 
 </body>
+
 </html>
