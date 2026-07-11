@@ -110,7 +110,7 @@
             <a href="https://github.com/Nezz77" target="_blank" class="btn-glass"
                 style="background: rgba(240, 246, 252, 0.08); border-color: rgba(240, 246, 252, 0.2);"><i
                     class="bi bi-github"></i> GitHub</a>
-            <a href="resume.html" class="btn-glass"
+            <a href="Resume Updated.pdf" download="Nesandu_Hesitha_Resume.pdf" class="btn-glass"
                 style="background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3);"><i
                     class="bi bi-file-earmark-pdf-fill"></i> Resume</a>
         </div>
@@ -727,7 +727,7 @@
                 const href = link.getAttribute('href');
                 if (href) {
                     const cleanHref = href.split('?')[0].split('#')[0];
-                    if (cleanHref.endsWith('.html') || cleanHref === 'index.html' || cleanHref === 'resume.html') {
+                    if (cleanHref.endsWith('.html') || cleanHref === 'index.html') {
                         try {
                             const url = new URL(href, window.location.href);
                             url.searchParams.set('theme', theme);
