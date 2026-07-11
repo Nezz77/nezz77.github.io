@@ -55,19 +55,22 @@
       border: 1px solid rgba(255,255,255,0.12);
       border-radius: 8px; padding: 8px 16px; text-decoration: none;
     }
-    /* Paper sheets */
+    /* Paper sheets — fake-column gradient ensures dark sidebar fills 100% height in both screen & print */
     .paper, .page2-paper {
       width: 210mm;
-      background: var(--main-bg);
+      min-height: 297mm;
+      /* Dark left column + white right column, always full height regardless of content */
+      background: linear-gradient(to right, #0f1117 68mm, #ffffff 68mm);
       border-radius: 4px;
       overflow: hidden;
       box-shadow: 0 25px 60px rgba(0,0,0,0.6);
       display: grid;
       grid-template-columns: 68mm 1fr;
+      align-items: start;
     }
-    /* Sidebar */
+    /* Sidebar — background is handled by the paper gradient above, sidebar is transparent */
     .sidebar, .page2-sidebar {
-      background: var(--sidebar-bg);
+      background: transparent;
       color: var(--sidebar-text);
       padding: 28px 20px;
       border-right: 3px solid var(--accent);
@@ -142,8 +145,17 @@
     /* ── PRINT ─────────────────────────────────────── */
     @media print {
       @page { size: A4; margin: 0; }
+
+      /* Force ALL background colors & images to print — works even without "Background graphics" checked */
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        forced-color-adjust: none !important;
+      }
+
       body { background: #fff !important; padding: 0 !important; display: block !important; }
       .controls { display: none !important; }
+
       .paper {
         width: 210mm !important; min-height: 297mm !important;
         border-radius: 0 !important; box-shadow: none !important;
@@ -153,13 +165,18 @@
         width: 210mm !important; min-height: 297mm !important;
         border-radius: 0 !important; box-shadow: none !important;
       }
+
+      /* Explicitly reinforce sidebar dark background */
       .sidebar, .page2-sidebar {
-        background: #0f1117 !important;
-        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+        background: transparent !important;
+        background-color: transparent !important;
       }
-      .s-tag, .proj-tag, .tl-date {
-        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+
+      /* Reinforce fake-column gradient so dark left stripe always prints */
+      .paper, .page2-paper {
+        background: linear-gradient(to right, #0f1117 68mm, #ffffff 68mm) !important;
       }
+
       .tl-item, .proj-item, .edu-item, .skill-grp { break-inside: avoid; page-break-inside: avoid; }
       a { color: inherit !important; }
     }
@@ -211,8 +228,8 @@
         <div class="edu-item">
           <div class="edu-deg">High School</div>
           <div class="edu-inst">Richmond College, Galle</div>
-          <div class="edu-date">Completed</div>
-          <div class="edu-desc">Advanced mathematics & technical clubs.</div>
+          <div class="edu-date">2009 &ndash; 2022</div>
+          <div class="edu-desc">Scholarship &middot; O/Ls &middot; A/Ls</div>
         </div>
       </div>
 
@@ -261,6 +278,42 @@
           drone videography, and professional photography. Highly motivated to solve real-world problems using modern software
           technologies. Always seeking opportunities to grow, collaborate, and contribute skills effectively.
         </p>
+      </div>
+
+      <!-- Academic Achievements -->
+      <div class="m-section">
+        <div class="m-heading"><i class="bi bi-award-fill"></i> Academic Achievements</div>
+        <div class="timeline">
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div>
+                <div class="tl-title">G.C.E. Ordinary Level (O/Ls)</div>
+                <div class="tl-company">Richmond College, Galle</div>
+              </div>
+              <span class="tl-date">9 A Passes</span>
+            </div>
+            <ul class="tl-list">
+              <li>Achieved 9 A passes including <strong>English Literature</strong> &mdash; top performance in batch.</li>
+            </ul>
+          </div>
+
+          <div class="tl-item">
+            <div class="tl-header">
+              <div>
+                <div class="tl-title">G.C.E. Advanced Level (A/Ls)</div>
+                <div class="tl-company">Richmond College, Galle &middot; Physical Science Stream</div>
+              </div>
+              <span class="tl-date">Z-Score: 1.9047</span>
+            </div>
+            <ul class="tl-list">
+              <li><strong>Combined Mathematics</strong> &mdash; A pass</li>
+              <li><strong>ICT</strong> &mdash; A pass</li>
+              <li><strong>Physics</strong> &mdash; C pass</li>
+            </ul>
+          </div>
+
+        </div>
       </div>
 
       <div class="m-section">
