@@ -23,13 +23,16 @@
 ::-webkit-scrollbar {
     width: 8px;
 }
+
 ::-webkit-scrollbar-track {
     background: var(--bg-dark);
 }
+
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, var(--primary-glow), var(--secondary-glow));
     border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(180deg, var(--secondary-glow), var(--primary-glow));
 }
@@ -124,16 +127,23 @@ body.photography-page .bg-image-overlay {
     0% {
         transform: translate(0, 0) scale(1);
     }
+
     50% {
         transform: translate(5%, 10%) scale(1.1);
     }
+
     100% {
         transform: translate(-5%, -5%) scale(0.9);
     }
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Outfit', sans-serif;
     color: var(--text-primary);
     font-weight: 700;
@@ -296,8 +306,13 @@ section:hover {
 }
 
 @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .hero-avatar-container:hover .hero-avatar {
@@ -327,8 +342,15 @@ section:hover {
 }
 
 @keyframes blink {
-    from, to { border-color: transparent }
-    50% { border-color: var(--accent); }
+
+    from,
+    to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: var(--accent);
+    }
 }
 
 .social-links {
@@ -433,8 +455,8 @@ section:hover {
 
 /* Education Logos */
 .education-logo-container {
-    width: 60px;
-    height: 60px;
+    width: 90px;
+    height: 90px;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -756,7 +778,7 @@ footer a:hover {
     display: none;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     z-index: 999;
     transition: all 0.3s ease;
 }
@@ -774,42 +796,42 @@ footer a:hover {
     .navbar-container {
         top: 10px;
     }
-    
+
     .glass-nav {
         padding: 8px 16px;
     }
-    
+
     .nav-links {
         gap: 8px;
     }
-    
+
     .nav-links a {
         font-size: 0.8rem;
         padding: 4px 8px;
     }
-    
+
     .nav-brand span {
         font-size: 1rem;
     }
-    
+
     .hero-title {
         font-size: 2.2rem;
     }
-    
+
     section {
         padding: 24px;
         margin: 20px auto;
         border-radius: 16px;
     }
-    
+
     h2 {
         font-size: 1.7rem;
     }
-    
+
     .timeline {
         padding-left: 20px;
     }
-    
+
     .timeline-icon {
         left: -32px;
     }
@@ -923,7 +945,7 @@ footer a:hover {
         top: 40px;
         left: 40px;
     }
-    
+
     #btn-events {
         position: absolute;
         top: 40px;
@@ -932,7 +954,9 @@ footer a:hover {
 }
 
 @media (max-width: 768px) {
-    #btn-nature, #btn-events {
+
+    #btn-nature,
+    #btn-events {
         display: inline-block;
         margin: 10px 5px;
     }
@@ -964,17 +988,19 @@ footer a:hover {
 .event-album-card::after {
     content: '';
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     z-index: 5;
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     pointer-events: none;
 }
 
 .event-album-card:hover {
     transform: translateY(-6px) scale(1.01);
     border-color: rgba(56, 189, 248, 0.45);
-    box-shadow: 0 16px 40px rgba(0,0,0,0.35), 0 0 25px rgba(56,189,248,0.12);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35), 0 0 25px rgba(56, 189, 248, 0.12);
 }
 
 /* 5-photo preview grid inside each album card */
@@ -1014,11 +1040,12 @@ footer a:hover {
 .album-preview-grid .preview-more {
     position: relative;
 }
+
 .album-preview-grid .preview-more::after {
     content: 'View All';
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0, 0, 0, 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1039,6 +1066,7 @@ footer a:hover {
     grid-template-rows: 1fr;
     height: 240px;
 }
+
 .album-preview-grid.grid-3 .preview-main {
     grid-row: 1;
 }
@@ -1049,6 +1077,7 @@ footer a:hover {
     grid-template-rows: 1fr;
     height: 240px;
 }
+
 .album-preview-grid.grid-1 .preview-main {
     grid-row: 1;
 }
@@ -1059,6 +1088,7 @@ footer a:hover {
     grid-template-rows: 1fr;
     height: 240px;
 }
+
 .album-preview-grid.grid-2 .preview-main {
     grid-row: 1;
 }
@@ -1081,8 +1111,8 @@ footer a:hover {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--accent);
-    background: rgba(56,189,248,0.1);
-    border: 1px solid rgba(56,189,248,0.2);
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid rgba(56, 189, 248, 0.2);
     border-radius: 20px;
     padding: 4px 12px;
     margin-bottom: 10px;
@@ -1098,7 +1128,7 @@ footer a:hover {
 
 .event-album-desc {
     font-size: 0.83rem;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255, 255, 255, 0.55);
     margin-bottom: 16px;
     line-height: 1.55;
     flex: 1;
@@ -1126,8 +1156,8 @@ footer a:hover {
     border-radius: 22px;
     font-size: 0.8rem;
     font-weight: 600;
-    border: 1px solid rgba(56,189,248,0.35);
-    background: rgba(56,189,248,0.08);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    background: rgba(56, 189, 248, 0.08);
     color: var(--accent);
     text-decoration: none;
     transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
@@ -1138,21 +1168,22 @@ footer a:hover {
 }
 
 .btn-view-album:hover {
-    background: rgba(56,189,248,0.18);
-    border-color: rgba(56,189,248,0.6);
+    background: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.6);
     transform: translateY(-1px);
     color: #fff;
     text-decoration: none;
 }
 
 .btn-view-album.secondary {
-    background: rgba(99,102,241,0.08);
-    border-color: rgba(99,102,241,0.3);
-    color: rgba(180,180,255,0.85);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: rgba(180, 180, 255, 0.85);
 }
+
 .btn-view-album.secondary:hover {
-    background: rgba(99,102,241,0.18);
-    border-color: rgba(99,102,241,0.6);
+    background: rgba(99, 102, 241, 0.18);
+    border-color: rgba(99, 102, 241, 0.6);
     color: #fff;
 }
 
@@ -1203,7 +1234,3 @@ footer a:hover {
     top: 68%;
     transform: translateY(-50%);
 }
-
-
-
-
