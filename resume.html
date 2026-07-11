@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="logos/nhlogo.ico">
+    <title>Nesandu Hesitha | Resume</title>
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            /* Dark Theme (Default) */
+            --bg-body: #09090b;
+            --bg-resume: rgba(20, 20, 28, 0.6);
+            --border-resume: rgba(255, 255, 255, 0.08);
+            --shadow-resume: 0 20px 50px rgba(0, 0, 0, 0.4);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent: #38bdf8;
+            --primary-glow: #6366f1;
+            --timeline-line: rgba(255, 255, 255, 0.1);
+            --timeline-dot: #6366f1;
+            --badge-bg: rgba(99, 102, 241, 0.15);
+            --badge-text: #a5b4fc;
+            --glass-blur: blur(16px) saturate(180%);
+            
+            /* UI elements */
+            --btn-bg: rgba(255, 255, 255, 0.05);
+            --btn-border: rgba(255, 255, 255, 0.1);
+            --btn-hover-bg: rgba(255, 255, 255, 0.15);
+            --btn-hover-border: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Light Theme via CSS Filter Inversion (For Screen View) */
+        html.light-theme {
+            filter: invert(1) hue-rotate(180deg) brightness(0.96);
+            --card-bg: rgba(20, 20, 28, 0.12); /* Richer glass opacity */
+            --bg-resume: rgba(20, 20, 28, 0.15); /* Translucent resume sheet on screen */
+            --card-border: rgba(0, 0, 0, 0.2); /* Inverts to bright glass border highlight on screen */
+            --glass-blur: blur(12px) saturate(150%); /* Premium frosted liquid glass effect */
+        }
+
+        /* Make background drawings more visible through the white card layers in Light Mode */
+        html.light-theme .bg-image-overlay {
+            opacity: 0.35 !important; /* Higher opacity so background details show clearly */
+        }
+
+        html.light-theme .orb {
+            opacity: 0.15 !important;
+        }
+
+        /* Revert inversion for images, videos, maps, and specific brand logos to preserve original colors */
+        html.light-theme img,
+        html.light-theme video,
+        html.light-theme iframe,
+        html.light-theme .education-logo,
+        html.light-theme .exp-logo-img,
+        html.light-theme .hero-avatar,
+        html.light-theme .avatar,
+        html.light-theme .nav-brand img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Global Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            background-color: var(--bg-body);
+        }
+
+        body {
+            background-color: transparent;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            transition: opacity 0.6s ease-in-out, background-color 0.4s ease, color 0.4s ease;
+            min-height: 100vh;
+            padding-bottom: 50px;
+            opacity: 0;
+        }
+
+        body.page-loaded {
+            opacity: 1;
+        }
+
+        /* Ambient Background Glow (Only for Screen Mode) */
+        .glow-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        body.light-theme .glow-orbs {
+            opacity: 0.2;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: float 20s infinite alternate ease-in-out;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(99, 102, 241, 0) 70%);
+        }
+
+        .orb-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
+            animation-delay: -5s;
+            animation-duration: 25s;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 10%) scale(1.1); }
+            100% { transform: translate(-5%, -5%) scale(0.9); }
+        }
+
+        /* Controls Floating Bar */
+        .controls-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+            background: rgba(9, 9, 11, 0.6);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-resume);
+            margin-bottom: 30px;
+            transition: background 0.4s ease;
+        }
+
+        body.light-theme .controls-bar {
+            background: rgba(241, 245, 249, 0.8);
+        }
+
+        .controls-content {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid var(--btn-border);
+            border-radius: 8px;
+            background-color: var(--btn-bg);
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-control:hover {
+            background-color: var(--btn-hover-bg);
+            border-color: var(--btn-hover-border);
+            transform: translateY(-1px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Resume Main Sheet */
+        .resume-sheet {
+            width: 92%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--bg-resume);
+            border: 1px solid var(--border-resume);
+            border-radius: 16px;
+            box-shadow: var(--shadow-resume);
+            backdrop-filter: var(--glass-blur);
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        /* 2-Column Grid Layout */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 35% 65%;
+        }
+
+        @media (max-width: 768px) {
+            .resume-grid {
+                grid-template-columns: 100%;
+            }
+        }
+
+        /* Common Styling */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
+        h2.section-title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary-glow);
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* ================= SIDEBAR (LEFT COLUMN) ================= */
+        .resume-sidebar {
+            background-color: rgba(0, 0, 0, 0.15);
+            border-right: 1px solid var(--border-resume);
+            padding: 40px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        body.light-theme .resume-sidebar {
+            background-color: rgba(248, 250, 252, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .resume-sidebar {
+                border-right: none;
+                border-bottom: 1px solid var(--border-resume);
+            }
+        }
+
+        /* Profile Block */
+        .profile-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .avatar-container {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--primary-glow);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebar-name {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .sidebar-title {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Details */
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .contact-icon {
+            color: var(--accent);
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        .contact-item a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+            word-break: break-all;
+        }
+
+        .contact-item a:hover {
+            color: var(--accent);
+        }
+
+        /* Education timeline in Sidebar */
+        .edu-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .edu-item {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--timeline-line);
+        }
+
+        .edu-dot {
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--timeline-dot);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .edu-date {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 4px;
+        }
+
+        .edu-degree {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .edu-inst {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+
+        .edu-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* Sidebar Skills */
+        .skills-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .skill-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .skill-group-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .skill-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background-color: var(--badge-bg);
+            color: var(--badge-text);
+            font-weight: 500;
+            border: 1px solid rgba(99, 102, 241, 0.05);
+        }
+
+        /* ================= MAIN CONTENT (RIGHT COLUMN) ================= */
+        .resume-main {
+            padding: 40px 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        @media (max-width: 576px) {
+            .resume-main {
+                padding: 30px 20px;
+            }
+        }
+
+        /* Profile Summary */
+        .summary-text {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Timeline (Experience) */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .timeline-item {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            padding-left: 24px;
+            border-left: 2px solid var(--timeline-line);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--timeline-dot);
+            box-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .job-title {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .job-company {
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .job-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-resume);
+            padding: 2px 8px;
+            border-radius: 12px;
+        }
+
+        body.light-theme .job-date {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .job-desc {
+            list-style-type: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .job-desc li {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+            position: relative;
+            padding-left: 15px;
+        }
+
+        .job-desc li::before {
+            content: '•';
+            position: absolute;
+            left: 2px;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Projects Section */
+        .projects-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) and (min-width: 577px) {
+            .projects-list {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 576px) {
+            .projects-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .project-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-resume);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 12px;
+            transition: all 0.2s ease;
+        }
+
+        body.light-theme .project-item {
+            background: rgba(0, 0, 0, 0.01);
+        }
+
+        .project-item:hover {
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        body.light-theme .project-item:hover {
+            background: rgba(0, 0, 0, 0.02);
+        }
+
+        .project-name {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .project-name i {
+            color: var(--accent);
+        }
+
+        .project-description {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .project-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .tech-tag {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-resume);
+        }
+
+        body.light-theme .tech-tag {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .project-link-btn {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            border: 1px dashed var(--accent);
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .project-link-btn:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+            color: var(--text-primary);
+        }
+
+        /* Footer info */
+        .resume-footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* ================= PRINT STYLE OPTIMIZATIONS ================= */
+        @media print {
+            /* Reset elements */
+            html {
+                filter: none !important;
+            }
+            body {
+                background-color: var(--bg-body) !important;
+                color: var(--text-primary) !important;
+                padding: 0;
+                margin: 0;
+                font-size: 10pt; /* Standard print typography scale */
+                opacity: 1 !important;
+                filter: none !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Variables when printing in LIGHT theme */
+            html.light-theme body {
+                --bg-body: #ffffff;
+                --bg-resume: #ffffff;
+                --border-resume: #e2e8f0;
+                --shadow-resume: none;
+                --text-primary: #000000;
+                --text-secondary: #334155;
+                --accent: #0f172a;
+                --primary-glow: #1e293b;
+                --timeline-line: #cbd5e1;
+                --timeline-dot: #0f172a;
+                --badge-bg: #f1f5f9;
+                --badge-text: #0f172a;
+            }
+
+            /* Variables when printing in DARK theme */
+            html:not(.light-theme) body {
+                --bg-body: #09090b;
+                --bg-resume: #14141c; /* solid color for print quality */
+                --border-resume: rgba(255, 255, 255, 0.1);
+                --shadow-resume: none;
+                --text-primary: #ffffff;
+                --text-secondary: #94a3b8;
+                --accent: #38bdf8;
+                --primary-glow: #6366f1;
+                --timeline-line: rgba(255, 255, 255, 0.15);
+                --timeline-dot: #6366f1;
+                --badge-bg: rgba(99, 102, 241, 0.2);
+                --badge-text: #a5b4fc;
+            }
+
+            .glow-orbs,
+            .controls-bar,
+            .project-links,
+            .resume-footer,
+            .btn-control {
+                display: none !important;
+            }
+
+            .resume-sheet {
+                width: 100%;
+                max-width: 100%;
+                border: none;
+                box-shadow: none;
+                border-radius: 0;
+                margin: 0;
+                padding: 0;
+                background-color: var(--bg-resume) !important;
+                backdrop-filter: none;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .resume-grid {
+                display: grid;
+                grid-template-columns: 35% 65%;
+            }
+
+            .resume-sidebar {
+                padding: 10mm 8mm;
+                border-right: 1.5px solid var(--border-resume) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            html.light-theme .resume-sidebar {
+                background-color: #f8fafc !important;
+            }
+
+            html:not(.light-theme) .resume-sidebar {
+                background-color: #111116 !important;
+            }
+
+            .resume-main {
+                padding: 10mm 12mm;
+                background: transparent;
+            }
+
+            h2.section-title {
+                font-size: 11pt;
+                margin-top: 15px;
+                margin-bottom: 12px;
+                border-bottom: 2px solid var(--primary-glow);
+            }
+
+            .job-date {
+                border: none;
+                background: none;
+                padding: 0;
+                font-weight: bold;
+                font-size: 8.5pt;
+                color: var(--text-primary);
+            }
+
+            /* Prevent page break issues */
+            .edu-item,
+            .timeline-item,
+            .project-item,
+            .skill-group,
+            .resume-section {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            /* Stack Featured Projects as rows (single column) when printing */
+            .projects-list {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px;
+            }
+
+            /* Each project card fills the full row width when printing */
+            .projects-list .project-item {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+
+            /* Custom page breaks for content balancing */
+            .print-break {
+                page-break-before: always;
+                break-before: page;
+            }
+
+            /* Optimize typography size for A4 pages */
+            .sidebar-name {
+                font-size: 18pt;
+                color: var(--text-primary);
+            }
+            
+            .sidebar-title {
+                font-size: 9pt;
+                color: var(--accent);
+                font-weight: 700;
+            }
+
+            .avatar-container {
+                width: 110px;
+                height: 110px;
+                border: 2px solid var(--primary-glow);
+                box-shadow: none;
+            }
+
+            .summary-text,
+            .job-desc li,
+            .project-description {
+                font-size: 9pt;
+                color: var(--text-secondary);
+            }
+
+            .tech-tag {
+                border: 1px solid var(--border-resume);
+                color: var(--text-secondary);
+                font-size: 7.5pt;
+                background: var(--badge-bg) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .skill-badge {
+                border: 1px solid var(--border-resume);
+                color: var(--badge-text);
+                background-color: var(--badge-bg) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            img, video, iframe, .avatar, .education-logo, .exp-logo-img, .hero-avatar {
+                filter: none !important;
+            }
+
+            /* Set A4 margins */
+            @page {
+                size: A4;
+                margin: 0; /* Let the container padding handle margins */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        try {
+            if (localStorage.getItem('theme') === 'light' || new URLSearchParams(window.location.search).get('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        } catch (e) {
+            if (new URLSearchParams(window.location.search).get('theme') === 'light') {
+                document.body.classList.add('light-theme');
+            }
+        }
+    </script>
+    <!-- Ambient Background Glow -->
+    <div class="glow-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <!-- Sticky Navigation Controls Bar -->
+    <header class="controls-bar">
+        <div class="controls-content">
+            <a href="index.html" class="btn-control">
+                <i class="bi bi-arrow-left"></i> Back to Portfolio
+            </a>
+            <div class="btn-group">
+                <button id="themeToggle" class="btn-control" title="Toggle Light/Dark Theme">
+                    <i class="bi bi-sun-fill" id="themeIcon"></i> <span id="themeText">Light Mode</span>
+                </button>
+                <button onclick="window.print()" class="btn-control" style="background-color: var(--primary-glow); border-color: var(--primary-glow); color: #fff;">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Print / Export PDF
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Resume Document -->
+    <main class="resume-sheet">
+        <div class="resume-grid">
+            
+            <!-- LEFT COLUMN (SIDEBAR) -->
+            <aside class="resume-sidebar">
+                
+                <!-- Profile Block -->
+                <div class="profile-block">
+                    <div class="avatar-container">
+                        <img src="assets/my4to2.jpg" alt="Nesandu Hesitha" class="avatar">
+                    </div>
+                    <div>
+                        <h1 class="sidebar-name">Nesandu Hesitha</h1>
+                        <p class="sidebar-title">IT Undergraduate</p>
+                    </div>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="resume-section">
+                    <h2 class="section-title"><i class="bi bi-person-lines-fill"></i> Contact</h2>
+                    <ul class="contact-list">
+                        <li class="contact-item">
+                            <i class="bi bi-telephone-fill contact-icon"></i>
+                            <div>
+                                <a href="tel:+94777940340">+94 77 794 0340</a><br>
+                                <a href="tel:+94722379560">+94 72 237 9560</a>
+                            </div>
+                        </li>
+                        <li class="contact-item">
+                            <i class="bi bi-envelope-fill contact-icon"></i>
+                            <div>
+                                <a href="mailto:nesanduhm@gmail.com">nesanduhm@gmail.com</a><br>
+                                <a href="mailto:nesanduhm@icloud.com">nesanduhm@icloud.com</a>
+                            </div>
+                        </li>
+                        <li class="contact-item">
+                            <i class="bi bi-geo-alt-fill contact-icon"></i>
+                            <span>Galle, Sri Lanka</span>
+                        </li>
+                        <li class="contact-item">
+                            <i class="bi bi-linkedin contact-icon"></i>
+                            <a href="https://linkedin.com/in/nezz77/" target="_blank">linkedin.com/in/nezz77</a>
+                        </li>
+                        <li class="contact-item">
+                            <i class="bi bi-github contact-icon"></i>
+                            <a href="https://github.com/Nezz77" target="_blank">github.com/Nezz77</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Education -->
+                <div class="resume-section">
+                    <h2 class="section-title"><i class="bi bi-mortarboard-fill"></i> Education</h2>
+                    <div class="edu-timeline">
+                        <div class="edu-item">
+                            <div class="edu-dot"></div>
+                            <p class="edu-date">2025 - 2029</p>
+                            <h3 class="edu-degree">BSc (Hons) in IT</h3>
+                            <p class="edu-inst">University of Moratuwa</p>
+                            <p class="edu-desc">Undergraduate, focusing on software engineering and modern systems design.</p>
+                        </div>
+                        <div class="edu-item">
+                            <div class="edu-dot"></div>
+                            <p class="edu-date">Completed</p>
+                            <h3 class="edu-degree">CMJD (Java Developer)</h3>
+                            <p class="edu-inst">IJSE</p>
+                            <p class="edu-desc">Comprehensive training in JEE patterns, MVC architecture, Hibernate, and Spring.</p>
+                        </div>
+                        <div class="edu-item">
+                            <div class="edu-dot"></div>
+                            <p class="edu-date">Completed</p>
+                            <h3 class="edu-degree">Richmond College</h3>
+                            <p class="edu-inst">High School Education</p>
+                            <p class="edu-desc">Engaged in advanced mathematical sciences and technical clubs.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills -->
+                <div class="resume-section">
+                    <h2 class="section-title"><i class="bi bi-tools"></i> Skills</h2>
+                    <div class="skills-section">
+                        <div class="skill-group">
+                            <p class="skill-group-title">Languages</p>
+                            <div class="skill-tags">
+                                <span class="skill-badge">Java</span>
+                                <span class="skill-badge">Python</span>
+                                <span class="skill-badge">C</span>
+                                <span class="skill-badge">JavaScript</span>
+                                <span class="skill-badge">TypeScript</span>
+                                <span class="skill-badge">HTML5/CSS3</span>
+                                <span class="skill-badge">SQL</span>
+                            </div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="skill-group-title">Frameworks & Tools</p>
+                            <div class="skill-tags">
+                                <span class="skill-badge">Spring Boot</span>
+                                <span class="skill-badge">React</span>
+                                <span class="skill-badge">Bootstrap</span>
+                                <span class="skill-badge">JavaFX</span>
+                                <span class="skill-badge">OpenCV</span>
+                                <span class="skill-badge">MediaPipe</span>
+                                <span class="skill-badge">Git/GitHub</span>
+                            </div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="skill-group-title">Media & Creative</p>
+                            <div class="skill-tags">
+                                <span class="skill-badge">Premiere Pro</span>
+                                <span class="skill-badge">Final Cut Pro</span>
+                                <span class="skill-badge">Adobe Photoshop</span>
+                                <span class="skill-badge">UI/UX Design</span>
+                                <span class="skill-badge">Drone Operations</span>
+                                <span class="skill-badge">Photography</span>
+                            </div>
+                        </div>
+                        <div class="skill-group">
+                            <p class="skill-group-title">Soft Skills</p>
+                            <div class="skill-tags">
+                                <span class="skill-badge">Problem-Solving</span>
+                                <span class="skill-badge">Time Management</span>
+                                <span class="skill-badge">Team Collaboration</span>
+                                <span class="skill-badge">Critical Thinking</span>
+                                <span class="skill-badge">Fast Learner</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- RIGHT COLUMN (MAIN CONTENT) -->
+            <div class="resume-main">
+                
+                <!-- Profile Summary -->
+                <div class="resume-section">
+                    <h2 class="section-title"><i class="bi bi-chat-right-quote-fill"></i> Professional Summary</h2>
+                    <p class="summary-text">
+                        A passionate IT undergraduate student skilled in web development, software engineering, and creative media. Experienced in developing applications with Java and Python, as well as production video editing and digital design. Highly motivated to solve real-world problems using modern software technologies and digital creative solutions. Always looking for opportunities to grow, collaborate, and contribute my skills effectively.
+                    </p>
+                </div>
+
+                <!-- Experience -->
+                <div class="resume-section">
+                    <h2 class="section-title"><i class="bi bi-briefcase-fill"></i> Work & Volunteer Experience</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="job-title">Official Photographer / Media Editor</h3>
+                                    <p class="job-company">MoraSpirit (Self-employed)</p>
+                                </div>
+                                <span class="job-date">Feb 2025 - Present</span>
+                            </div>
+                            <ul class="job-desc">
+                                <li>Capture high-quality sports and action photographs, ensuring dynamic coverage of university sporting events.</li>
+                                <li>Edit and process action imagery rapidly for publication across official sports journalism and social media portals.</li>
+                                <li>Collaborate with writing, editing, and media crews to deliver engaging visual stories celebrating university athletics.</li>
+                            </ul>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="job-title">Official Photographer</h3>
+                                    <p class="job-company">FIT Moments (Self-employed)</p>
+                                </div>
+                                <span class="job-date">Jan 2026 - Present</span>
+                            </div>
+                            <ul class="job-desc">
+                                <li>Serve as official media photographer for the Faculty of Information Technology, covering academic events, exhibitions, and student union activities.</li>
+                                <li>Produce polished event coverage, corporate-style portraits, and engaging social media creative assets.</li>
+                                <li>Maintain tight schedules and coordinate media coverage workflows under the ITFSU Students' Union.</li>
+                            </ul>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="job-title">Volunteering & Mentorship</h3>
+                                    <p class="job-company">Sasnaka Sansada Foundation</p>
+                                </div>
+                                <span class="job-date">Active Volunteer</span>
+                            </div>
+                            <ul class="job-desc">
+                                <li>Contributed to charitable community outreach programs and educational development.</li>
+                                <li>Assisted high school students through mentorship seminars and mathematical guidance.</li>
+                                <li>Collaborated in planning and organizing large-scale NGO operations and events.</li>
+                            </ul>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-header">
+                                <div>
+                                    <h3 class="job-title">Paper Marking Panelist</h3>
+                                    <p class="job-company">Applied Mathematics Division</p>
+                                </div>
+                                <span class="job-date">2024 Mid - 2025</span>
+                            </div>
+                            <ul class="job-desc">
+                                <li>Evaluated, graded, and marked examination papers with strict accuracy, fairness, and compliance with academic guidelines.</li>
+                                <li>Formulated and provided detailed, constructive feedback to help students understand their areas of improvement.</li>
+                                <li>Worked collaboratively alongside senior panelists to establish and maintain grading standards.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects -->
+                <div class="resume-section print-break">
+                    <h2 class="section-title"><i class="bi bi-folder-fill"></i> Featured Projects</h2>
+                    <div class="projects-list">
+                        
+                        <!-- Hologram -->
+                        <div class="project-item" style="grid-column: span 2; border-color: rgba(99, 102, 241, 0.25);">
+                            <div>
+                                <h3 class="project-name"><i class="bi bi-cpu-fill"></i> Hologram Fan Array (Fusion5)</h3>
+                                <p class="project-description" style="margin-top: 5px;">
+                                    Developed the <strong>first-ever hologram built in Sri Lanka</strong> with a vertical overlapping mechanism under the Microcontroller Based Application Development Project. Drives dual ESP32-S3 controllers for POV LED rendering, polls ultrasonic safety shields, and broadcasts real-time statistics over WebSockets.
+                                </p>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-tech">
+                                    <span class="tech-tag">ESP32-S3</span>
+                                    <span class="tech-tag">Arduino C++</span>
+                                    <span class="tech-tag">FastLED</span>
+                                    <span class="tech-tag">WebSockets</span>
+                                    <span class="tech-tag">Hardware</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nezz77/hologram" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> Controller</a>
+                                    <a href="https://github.com/Nezz77/hologram_fan_software_Overlap" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> App Software</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lost & Found -->
+                        <div class="project-item">
+                            <div>
+                                <h3 class="project-name"><i class="bi bi-search"></i> Lost & Found System</h3>
+                                <p class="project-description" style="margin-top: 5px;">
+                                    A full-stack web application designed to report and recover lost items on campus. Built with Spring Security JWT auth, MySQL database, and a React TypeScript UI.
+                                </p>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-tech">
+                                    <span class="tech-tag">React (TS)</span>
+                                    <span class="tech-tag">Spring Boot</span>
+                                    <span class="tech-tag">MySQL</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nezz77/Lost-FoundSystem" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> Backend</a>
+                                    <a href="https://github.com/Nezz77/Lost-FoundSystem_Frontend" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> Frontend</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- airDraw -->
+                        <div class="project-item">
+                            <div>
+                                <h3 class="project-name"><i class="bi bi-brush"></i> airDraw Canvas</h3>
+                                <p class="project-description" style="margin-top: 5px;">
+                                    A computer vision-based air writing application that tracks hand gestures to draw on a virtual canvas in real-time. Powered by OpenCV and MediaPipe.
+                                </p>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-tech">
+                                    <span class="tech-tag">Python</span>
+                                    <span class="tech-tag">OpenCV</span>
+                                    <span class="tech-tag">MediaPipe</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nezz77/airDraw" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> Repository</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Course Registration -->
+                        <div class="project-item">
+                            <div>
+                                <h3 class="project-name"><i class="bi bi-card-checklist"></i> Course Registrar</h3>
+                                <p class="project-description" style="margin-top: 5px;">
+                                    A desktop course registration application featuring a rich JavaFX graphical user interface backed by a relational MySQL database.
+                                </p>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-tech">
+                                    <span class="tech-tag">JavaFX</span>
+                                    <span class="tech-tag">Java OOP</span>
+                                    <span class="tech-tag">MySQL</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nezz77/CRS_PROJECT" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> Repository</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FutureTech Shop -->
+                        <div class="project-item">
+                            <div>
+                                <h3 class="project-name"><i class="bi bi-cart3"></i> FutureTech Shop</h3>
+                                <p class="project-description" style="margin-top: 5px;">
+                                    A responsive online tech shop landing page and frontend showcase with smooth animations.
+                                </p>
+                            </div>
+                            <div class="project-meta">
+                                <div class="project-tech">
+                                    <span class="tech-tag">HTML5</span>
+                                    <span class="tech-tag">CSS3</span>
+                                    <span class="tech-tag">JavaScript</span>
+                                </div>
+                                <div class="project-links">
+                                    <a href="https://github.com/Nezz77/FutureTech" target="_blank" class="project-link-btn"><i class="bi bi-github"></i> Repo</a>
+                                    <a href="https://nezz77.github.io/FutureTech/" target="_blank" class="project-link-btn"><i class="bi bi-globe"></i> Live</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer for Screen View only -->
+    <footer class="resume-footer">
+        <p>&copy; 2026 Nesandu Hesitha. Built with HTML, CSS & JS. Open this page and press Ctrl+P or Cmd+P to save as A4 PDF.</p>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const themeText = document.getElementById('themeText');
+        const body = document.body;
+
+        function updateLinksTheme(theme) {
+            document.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href) {
+                    const cleanHref = href.split('?')[0].split('#')[0];
+                    if (cleanHref.endsWith('.html') || cleanHref === 'index.html' || cleanHref === 'resume.html') {
+                        try {
+                            const url = new URL(href, window.location.href);
+                            url.searchParams.set('theme', theme);
+                            link.setAttribute('href', url.pathname.substring(url.pathname.lastIndexOf('/') + 1) + url.search + url.hash);
+                        } catch (e) {}
+                    }
+                }
+            });
+        }
+
+        // Helper to update UI state and save to localStorage
+        function updateTheme(isLight) {
+            const themeStr = isLight ? 'light' : 'dark';
+            if (isLight) {
+                document.documentElement.classList.add('light-theme');
+                if (themeIcon) themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                if (themeText) themeText.textContent = 'Dark Mode';
+                try { localStorage.setItem('theme', 'light'); } catch (e) {}
+            } else {
+                document.documentElement.classList.remove('light-theme');
+                if (themeIcon) themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                if (themeText) themeText.textContent = 'Light Mode';
+                try { localStorage.setItem('theme', 'dark'); } catch (e) {}
+            }
+            updateLinksTheme(themeStr);
+        }
+
+        // Initialize theme from localStorage & URL fallback
+        const savedTheme = (function() {
+            try {
+                const t = localStorage.getItem('theme');
+                if (t) return t;
+            } catch (e) {}
+            return new URLSearchParams(window.location.search).get('theme') || 'dark';
+        })();
+        let isLightMode = savedTheme === 'light';
+        updateTheme(isLightMode);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                isLightMode = !isLightMode;
+                updateTheme(isLightMode);
+            });
+        }
+
+        // Smooth Page Load Initialization
+        window.addEventListener('load', () => {
+            body.classList.add('page-loaded');
+        });
+        // Fallback safety timeout (1.2 seconds max)
+        setTimeout(() => {
+            body.classList.add('page-loaded');
+        }, 1200);
+    </script>
+</body>
+
+</html>

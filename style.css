@@ -13,6 +13,74 @@
     --glass-blur: blur(16px) saturate(180%);
 }
 
+/* Light Theme via CSS Filter Inversion (on html root to prevent fixed navbar jumping) */
+html.light-theme {
+    filter: invert(1) hue-rotate(180deg) brightness(0.96);
+    /* brightness(0.96) softens the white background */
+    --card-bg: rgba(20, 20, 28, 0.12);
+    /* Richer glass opacity */
+    --card-border: rgba(0, 0, 0, 0.2);
+    /* Inverts to bright glass border highlight on screen */
+    --glass-blur: blur(12px) saturate(150%);
+    /* Premium frosted liquid glass effect */
+}
+
+/* Make background drawings more visible through the white card layers in Light Mode */
+html.light-theme .bg-image-overlay {
+    opacity: 0.35 !important;
+    /* Higher opacity so background details show clearly */
+}
+
+html.light-theme .orb {
+    opacity: 0.15 !important;
+}
+
+/* Revert inversion for images, videos, maps, canvases, and specific brand logos to preserve original colors */
+html.light-theme img,
+html.light-theme video,
+html.light-theme iframe,
+html.light-theme .education-logo,
+html.light-theme .exp-logo-img,
+html.light-theme .hero-avatar,
+html.light-theme .avatar,
+html.light-theme .nav-brand img,
+html.light-theme #hero-3d-canvas {
+    filter: invert(1) hue-rotate(180deg);
+}
+
+/* Ensure text gradient clips invert correctly on light-theme */
+html.light-theme .hero-title,
+html.light-theme .nav-brand span {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    color: #ffffff !important;
+    /* Will be inverted by the filter to black */
+}
+
+/* Theme Toggle Button */
+.btn-theme {
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    cursor: pointer;
+    padding: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, color 0.3s ease;
+    border-radius: 50%;
+}
+
+.btn-theme:hover {
+    transform: scale(1.1);
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -37,8 +105,12 @@
     background: linear-gradient(180deg, var(--secondary-glow), var(--primary-glow));
 }
 
-body {
+html {
     background-color: var(--bg-dark);
+}
+
+body {
+    background-color: transparent;
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
@@ -1233,4 +1305,11 @@ footer a:hover {
     right: 170px;
     top: 68%;
     transform: translateY(-50%);
+}
+
+/* Print resets to disable theme filters */
+@media print {
+    html {
+        filter: none !important;
+    }
 }

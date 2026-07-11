@@ -21,6 +21,17 @@
 </head>
 
 <body>
+    <script>
+        try {
+            if (localStorage.getItem('theme') === 'light' || new URLSearchParams(window.location.search).get('theme') === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        } catch (e) {
+            if (new URLSearchParams(window.location.search).get('theme') === 'light') {
+                document.documentElement.classList.add('light-theme');
+            }
+        }
+    </script>
     <!-- Background Elements -->
     <div class="bg-image-overlay"></div>
     <div class="glow-orbs">
@@ -36,18 +47,24 @@
                 <img src="logos/nhlogo.png" alt="NH Logo" width="32" height="32">
                 <span>NESANDU.HM</span>
             </a>
-            <ul class="nav-links d-none d-md-flex">
-                <li><a href="#profile" class="nav-link-item">Profile</a></li>
-                <li><a href="#education" class="nav-link-item">Education</a></li>
-                <li><a href="#skills" class="nav-link-item">Skills</a></li>
-                <li><a href="#experience" class="nav-link-item">Experience</a></li>
-                <li><a href="#projects" class="nav-link-item">Projects</a></li>
-                <li><a href="#hobbies" class="nav-link-item">Hobbies</a></li>
-            </ul>
-            <!-- Mobile Toggle -->
-            <button class="d-md-none btn btn-link text-white p-0" id="mobileMenuToggle" style="font-size: 1.5rem;">
-                <i class="bi bi-list"></i>
-            </button>
+            <div class="d-flex align-items-center gap-3">
+                <ul class="nav-links d-none d-md-flex mb-0">
+                    <li><a href="#profile" class="nav-link-item">Profile</a></li>
+                    <li><a href="#education" class="nav-link-item">Education</a></li>
+                    <li><a href="#skills" class="nav-link-item">Skills</a></li>
+                    <li><a href="#experience" class="nav-link-item">Experience</a></li>
+                    <li><a href="#projects" class="nav-link-item">Projects</a></li>
+                    <li><a href="#hobbies" class="nav-link-item">Hobbies</a></li>
+                </ul>
+                <button id="themeToggle" class="btn-theme" title="Toggle Light/Dark Theme">
+                    <i class="bi bi-sun-fill" id="themeIcon"></i>
+                </button>
+                <!-- Mobile Toggle -->
+                <button class="d-md-none btn btn-link text-white p-0" id="mobileMenuToggle"
+                    style="font-size: 1.5rem; display: flex; align-items: center;">
+                    <i class="bi bi-list"></i>
+                </button>
+            </div>
         </nav>
     </div>
 
@@ -93,7 +110,7 @@
             <a href="https://github.com/Nezz77" target="_blank" class="btn-glass"
                 style="background: rgba(240, 246, 252, 0.08); border-color: rgba(240, 246, 252, 0.2);"><i
                     class="bi bi-github"></i> GitHub</a>
-            <a href="Resume.pdf" download class="btn-glass"
+            <a href="resume.html" class="btn-glass"
                 style="background: rgba(99, 102, 241, 0.15); border-color: rgba(99, 102, 241, 0.3);"><i
                     class="bi bi-file-earmark-pdf-fill"></i> Resume</a>
         </div>
@@ -551,8 +568,8 @@
                     });
                 }
 
-                // Apply to major container cards
-                document.querySelectorAll('.exp-item, .education-card, .project-card, .hobby-card').forEach(el => {
+                // Apply to major container cards and sections for refraction effect
+                document.querySelectorAll('section, .exp-item, .timeline-content, .skill-category, .project-card, .hobby-card').forEach(el => {
                     liquidGlass(el, {
                         scale: -50,
                         chroma: 2,
@@ -682,6 +699,66 @@
         setTimeout(() => {
             document.body.classList.add('page-loaded');
         }, 1200);
+
+        // Theme Toggle Logic with Persistence & fallback for file://
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        function getSavedTheme() {
+            try {
+                const theme = localStorage.getItem('theme');
+                if (theme) return theme;
+            } catch (e) {
+                console.warn('localStorage blocked, using URL fallback');
+            }
+            const params = new URLSearchParams(window.location.search);
+            return params.get('theme') || 'dark';
+        }
+
+        function saveSavedTheme(theme) {
+            try {
+                localStorage.setItem('theme', theme);
+            } catch (e) { }
+            updateLinksTheme(theme);
+        }
+
+        function updateLinksTheme(theme) {
+            document.querySelectorAll('a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href) {
+                    const cleanHref = href.split('?')[0].split('#')[0];
+                    if (cleanHref.endsWith('.html') || cleanHref === 'index.html' || cleanHref === 'resume.html') {
+                        try {
+                            const url = new URL(href, window.location.href);
+                            url.searchParams.set('theme', theme);
+                            link.setAttribute('href', url.pathname.substring(url.pathname.lastIndexOf('/') + 1) + url.search + url.hash);
+                        } catch (e) { }
+                    }
+                }
+            });
+        }
+
+        function setTheme(isLight) {
+            if (isLight) {
+                document.documentElement.classList.add('light-theme');
+                if (themeIcon) themeIcon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+                saveSavedTheme('light');
+            } else {
+                document.documentElement.classList.remove('light-theme');
+                if (themeIcon) themeIcon.classList.replace('bi-moon-fill', 'bi-sun-fill');
+                saveSavedTheme('dark');
+            }
+        }
+
+        // Initialize theme
+        const activeThemeIsLight = getSavedTheme() === 'light';
+        setTheme(activeThemeIsLight);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                setTheme(!document.documentElement.classList.contains('light-theme'));
+            });
+        }
 
         // Register Service Worker for offline support & instant caching (except on localhost/development)
         if ('serviceWorker' in navigator) {
