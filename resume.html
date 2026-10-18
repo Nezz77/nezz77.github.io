@@ -77,6 +77,38 @@
             background-color: var(--bg-body);
         }
 
+        ::view-transition-group(root) {
+            animation: none;
+        }
+
+        ::view-transition-old(root) {
+            animation: theme-fade-out 350ms ease both;
+        }
+
+        ::view-transition-new(root) {
+            animation: theme-fade-in 350ms ease both;
+        }
+
+        @keyframes theme-fade-out {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        @keyframes theme-fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
         body {
             background-color: transparent;
             color: var(--text-primary);
@@ -1359,8 +1391,16 @@
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                isLightMode = !isLightMode;
-                updateTheme(isLightMode);
+                const applyThemeChange = () => {
+                    isLightMode = !isLightMode;
+                    updateTheme(isLightMode);
+                };
+
+                if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.startViewTransition(applyThemeChange);
+                } else {
+                    applyThemeChange();
+                }
             });
         }
 

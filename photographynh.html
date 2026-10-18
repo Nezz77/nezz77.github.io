@@ -997,7 +997,15 @@
 
         if (themeToggle) {
             themeToggle.addEventListener('click', () => {
-                setTheme(!document.documentElement.classList.contains('light-theme'));
+                const updateTheme = () => {
+                    setTheme(!document.documentElement.classList.contains('light-theme'));
+                };
+
+                if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    document.startViewTransition(updateTheme);
+                } else {
+                    updateTheme();
+                }
             });
         }
 
