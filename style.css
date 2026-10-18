@@ -1683,6 +1683,19 @@ html.light-theme .event-photo-viewer img {
     transform: translateY(-50%);
 }
 
+/* Keep the detailed equipment clear of the heading on smaller laptops. */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .photography-page .glass-bubble {
+        width: 110px;
+        height: 110px;
+    }
+
+    .photography-page #camera-bubble { left: 35px; top: 35%; }
+    .photography-page #drone-bubble { right: 35px; top: 35%; }
+    .photography-page #gimbal-bubble { left: 65px; top: 72%; }
+    .photography-page #remote-bubble { right: 65px; top: 72%; }
+}
+
 /* Print resets to disable theme filters */
 @media print {
     html {
