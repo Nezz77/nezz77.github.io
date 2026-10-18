@@ -1,9 +1,11 @@
-const CACHE_NAME = 'nh-portfolio-cache-v5';
+const CACHE_NAME = 'nh-portfolio-cache-v6';
 const CORE_ASSETS = [
   './',
   './index.html',
   './photographynh.html',
   './style.css',
+  './page-transitions.css',
+  './page-transitions.js',
   './logos/nhlogo.png',
   './logos/nhlogo.ico',
   './assets/background.webp',

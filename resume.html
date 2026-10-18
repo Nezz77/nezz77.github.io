@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="page-transitions.css">
+    <script src="page-transitions.js" defer></script>
     
     <style>
         /* CSS Variables */
@@ -75,38 +77,6 @@
 
         html {
             background-color: var(--bg-body);
-        }
-
-        ::view-transition-group(root) {
-            animation: none;
-        }
-
-        ::view-transition-old(root) {
-            animation: theme-fade-out 350ms ease both;
-        }
-
-        ::view-transition-new(root) {
-            animation: theme-fade-in 350ms ease both;
-        }
-
-        @keyframes theme-fade-out {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        @keyframes theme-fade-in {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
         }
 
         body {
@@ -1396,11 +1366,7 @@
                     updateTheme(isLightMode);
                 };
 
-                if (document.startViewTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                    document.startViewTransition(applyThemeChange);
-                } else {
-                    applyThemeChange();
-                }
+                runThemeTransition(applyThemeChange, themeToggle);
             });
         }
 

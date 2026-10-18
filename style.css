@@ -25,39 +25,6 @@ html.light-theme {
     /* Premium frosted liquid glass effect */
 }
 
-/* Cross-fade the captured pages when the theme changes. */
-::view-transition-group(root) {
-    animation: none;
-}
-
-::view-transition-old(root) {
-    animation: theme-fade-out 350ms ease both;
-}
-
-::view-transition-new(root) {
-    animation: theme-fade-in 350ms ease both;
-}
-
-@keyframes theme-fade-out {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
-}
-
-@keyframes theme-fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 /* Make background drawings more visible through the white card layers in Light Mode */
 html.light-theme .bg-image-overlay {
     opacity: 0.35 !important;
