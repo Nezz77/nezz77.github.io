@@ -195,7 +195,7 @@
                 ctx.drawImage(image,(w-image.width*scale)/2,(h-image.height*scale)/2,image.width*scale,image.height*scale);
                 ctx.fillStyle='rgba(3,10,17,0.15)';ctx.fillRect(0,0,w,h);drawCameraUI(ctx,w,h);map.needsUpdate=true;invalidate();
             };
-            image.src='images/img7.jpg';
+            image.src='images/img7-jpg.webp';
             return map;
         }
         function drawCameraUI(ctx,w,h) {
