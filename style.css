@@ -1232,6 +1232,26 @@ footer a:hover {
     z-index: 1;
 }
 
+.album-folder-photo:nth-child(6) {
+    --fan-x: -28%;
+    --fan-y: -5%;
+    --fan-angle: -13deg;
+    --photo-x: -8%;
+    --photo-y: 8%;
+    --photo-angle: -25deg;
+    z-index: 0;
+}
+
+.album-folder-photo:nth-child(7) {
+    --fan-x: 28%;
+    --fan-y: -5%;
+    --fan-angle: 13deg;
+    --photo-x: 8%;
+    --photo-y: 8%;
+    --photo-angle: 25deg;
+    z-index: 0;
+}
+
 .album-folder-photo:only-child {
     --photo-x: 0%;
     --photo-y: -4%;
