@@ -1048,7 +1048,7 @@ footer a:hover {
     border-radius: 24px;
     overflow: hidden;
     margin-bottom: 32px;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.48s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s ease;
     position: relative;
     user-select: none;
     -webkit-user-select: none;
@@ -1084,7 +1084,9 @@ footer a:hover {
     aspect-ratio: 1.3;
     margin: 8px auto 0;
     perspective: 1000px;
-    transition: margin-top 0.5s cubic-bezier(0.2, 0.7, 0.25, 1);
+    /* Expansion layout is committed once; JS FLIP animates its visual offset. */
+    contain: style;
+    transition: none;
     -webkit-user-drag: none;
 }
 
@@ -1121,13 +1123,12 @@ footer a:hover {
     box-shadow: inset 1px 2px 1px rgba(225, 241, 255, 0.3);
 }
 
-.album-folder:not(.is-expanded) .album-folder-photos {
-    clip-path: inset(0 10% 11% round 0 0 20px 20px);
-}
-
 .album-folder-photos {
     position: absolute;
     inset: 0;
+    /* Interpolate the pocket opening instead of abruptly removing its mask. */
+    clip-path: inset(0 10% 11% round 0 0 20px 20px);
+    transition: clip-path 0.68s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .album-folder-photo {
@@ -1153,10 +1154,20 @@ footer a:hover {
     pointer-events: none;
     appearance: none;
     box-shadow: 0 2px 3px rgba(4, 25, 61, 0.12), 0 7px 12px rgba(4, 25, 61, 0.2);
-    transform: translate(var(--photo-x), calc(var(--photo-y) + var(--photo-lift))) rotate(var(--photo-angle)) scale(var(--photo-scale));
+    transform: translate3d(var(--photo-x), calc(var(--photo-y) + var(--photo-lift)), 0) rotate(var(--photo-angle)) scale(var(--photo-scale));
     transform-origin: 50% 90%;
-    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.25, 1);
+    transition: transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
     -webkit-user-drag: none;
+}
+
+/* Promote only the album being used, rather than every photo on the page. */
+.album-folder.is-motion-ready .album-folder-photo,
+.album-folder.is-motion-ready .album-folder-front {
+    will-change: transform;
+}
+
+.album-folder.is-motion-ready .album-folder-photos {
+    will-change: clip-path;
 }
 
 .album-folder-photo:nth-child(2) {
@@ -1242,8 +1253,9 @@ footer a:hover {
     appearance: none;
     cursor: pointer;
     transform-origin: 50% 100%;
+    transform: translateZ(0) rotateX(0deg);
     filter: drop-shadow(0 7px 7px rgba(0, 26, 70, 0.2));
-    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.25, 1);
+    transition: transform 0.68s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* A curved folder lip, with a soft highlight across the blue front pocket. */
@@ -1283,7 +1295,7 @@ footer a:hover {
     }
 
     .event-album-card:hover .album-folder-front {
-        transform: rotateX(-12deg);
+        transform: translateZ(0) rotateX(-12deg);
     }
 }
 
@@ -1292,7 +1304,7 @@ footer a:hover {
 }
 
 .event-album-card:focus-within .album-folder-front {
-    transform: rotateX(-12deg);
+    transform: translateZ(0) rotateX(-12deg);
 }
 
 /* Keep the folder blue and the photographs natural under the page's theme filter. */
@@ -1306,6 +1318,7 @@ html.light-theme .album-folder img {
 
 @media (prefers-reduced-motion: reduce) {
     .event-album-card,
+    .album-folder-photos,
     .album-folder-photo,
     .album-folder-front {
         transition: none;
@@ -1323,7 +1336,7 @@ html.light-theme .album-folder img {
     }
 }
 
-/* A single click fans the prints out, like the artist collection folders. */
+/* A click/double-click fans the prints out as one reversible gesture. */
 .album-folder-photo img {
     width: 100%;
     height: 100%;
@@ -1338,6 +1351,10 @@ html.light-theme .album-folder img {
     margin-top: 76px;
 }
 
+.album-folder.is-expanded .album-folder-photos {
+    clip-path: inset(-45% -20% 11% round 0 0 20px 20px);
+}
+
 .album-folder.is-expanded .album-folder-photo {
     --photo-x: var(--fan-x);
     --photo-y: var(--fan-y);
@@ -1349,6 +1366,7 @@ html.light-theme .album-folder img {
 }
 
 .album-folder.is-expanded .album-folder-photo:focus-visible {
+    transition-duration: 0.24s;
     --photo-scale: 0.68;
     --photo-angle: 0deg;
     z-index: 10;
@@ -1362,6 +1380,7 @@ html.light-theme .album-folder img {
 
 @media (hover: hover) and (pointer: fine) {
     .album-folder.is-expanded .album-folder-photo:hover {
+        transition-duration: 0.24s;
         --photo-scale: 0.68;
         --photo-angle: 0deg;
         z-index: 10;
@@ -1558,6 +1577,9 @@ html.light-theme .event-photo-viewer img {
 
 @media (prefers-reduced-motion: reduce) {
     .album-folder { transition: none; }
+    .album-folder.is-motion-ready .album-folder-photo,
+    .album-folder.is-motion-ready .album-folder-front,
+    .album-folder.is-motion-ready .album-folder-photos { will-change: auto; }
     .event-photo-viewer[open] { animation: none; }
 }
 
