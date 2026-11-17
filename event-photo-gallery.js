@@ -26,12 +26,16 @@
     const motionDuration = 680;
     const motionEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
     // Cache the static album DOM; a toggle only updates the old/new folders.
-    const folderParts = new Map(folders.map(folder => [folder, {
-        toggle: folder.querySelector('.album-folder-front'),
-        name: folder.querySelector('.album-folder-name').textContent,
-        count: folder.querySelector('.album-folder-count'),
-        photos: [...folder.querySelectorAll('.album-folder-photo')]
-    }]));
+    const folderParts = new Map(folders.map(folder => {
+        const count = folder.querySelector('.album-folder-count');
+        return [folder, {
+            toggle: folder.querySelector('.album-folder-front'),
+            name: folder.querySelector('.album-folder-name').textContent,
+            count,
+            closedCount: count.textContent,
+            photos: [...folder.querySelectorAll('.album-folder-photo')]
+        }];
+    }));
     const layoutTargets = folders.flatMap(folder => {
         const card = folder.closest('.event-album-card');
         const item = card.closest('.gallery-item');
@@ -111,14 +115,14 @@
 
     function setExpanded(folder, expanded) {
         if (folder.classList.contains('is-expanded') === expanded) return;
-        const { toggle, name, count, photos } = folderParts.get(folder);
+        const { toggle, name, count, closedCount, photos } = folderParts.get(folder);
         warmMotion(folder);
         folder.classList.toggle('is-expanded', expanded);
         toggle.setAttribute('aria-expanded', String(expanded));
         toggle.setAttribute('aria-label', `${expanded ? 'Collapse' : 'Expand'} ${name} photos`);
         count.textContent = expanded
             ? 'Choose a photo · Click to close'
-            : `${String(photos.length).padStart(2, '0')} photo${photos.length === 1 ? '' : 's'} · Click to open`;
+            : closedCount;
         photos.forEach(button => {
             button.tabIndex = expanded ? 0 : -1;
             button.setAttribute('aria-hidden', String(!expanded));
