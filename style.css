@@ -1362,7 +1362,6 @@ html.light-theme .album-folder img {
     --photo-scale: 0.58;
     --photo-lift: 0px;
     pointer-events: auto;
-    z-index: 8;
 }
 
 .album-folder.is-expanded .album-folder-photo:focus-visible {
